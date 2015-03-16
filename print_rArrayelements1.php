@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta http-equiv="Content_Type"content="text/html;charset=utf-8">
-<title>Inspecting an array with print_r,</title>
+<title> Inspecting an array with print_r() </title>
 </head>
 
 <body>
