@@ -1,0 +1,74 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package ExtensionEx;
+
+/**
+ *
+ * @author Trophic
+ */
+public class Studclass {
+    //variables
+    private String Name;
+    private double Mark1;
+    private double Mark2;
+    private double Average;
+    private String Grade;
+    
+    //constructor
+    public Studclass (String Name, double Mark1, double Mark2, double Average, String Grade)
+    {
+        this.Name = Name;
+        this.Average = Average;
+        this.Grade = Grade;
+        this.Mark1 = Mark1;
+        this.Mark2 = Mark2;
+    }
+    
+    //methods
+    public String getName()
+    {
+        return Name;
+    }
+    public double getMark1()
+    {
+        return Mark1;
+    }
+    public double getMark2()
+    {
+        return Mark2;
+    }
+    public double getAverage()
+    {
+        Average = (getMark1() + getMark2())/2;
+        return Average;
+    }
+    public String getGrade()
+    {
+        if (Average<101 && Average>80)
+        {
+            Grade = "HD";
+            return Grade;
+        }
+        if (Average<79 && Average>70)
+        {
+            Grade = "D";
+            return Grade;
+        }
+        if (Average<69 && Average>60)
+        {
+            Grade = "C";
+            return Grade;
+        }
+        if (Average<59 && Average>50)
+        {
+            Grade = "P";
+            return Grade;
+        }
+        else
+            Grade = "F";
+            return Grade;
+    }
+}
