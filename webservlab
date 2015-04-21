@@ -1,0 +1,131 @@
+ServerRoot "C:/xampp/apache"
+Listen 80
+ServerAdmin postmaster@localhost
+DocumentRoot "C:/neighbour"
+ServerName www.neighbour.com
+
+#MODULES
+LoadModule access_compat_module modules/mod_access_compat.so
+LoadModule actions_module modules/mod_actions.so
+LoadModule alias_module modules/mod_alias.so
+LoadModule allowmethods_module modules/mod_allowmethods.so
+LoadModule asis_module modules/mod_asis.so
+LoadModule auth_basic_module modules/mod_auth_basic.so
+#LoadModule auth_digest_module modules/mod_auth_digest.so
+#LoadModule authn_anon_module modules/mod_authn_anon.so
+LoadModule authn_core_module modules/mod_authn_core.so
+#LoadModule authn_dbd_module modules/mod_authn_dbd.so
+#LoadModule authn_dbm_module modules/mod_authn_dbm.so
+LoadModule authn_file_module modules/mod_authn_file.so
+#LoadModule authn_socache_module modules/mod_authn_socache.so
+#LoadModule authnz_ldap_module modules/mod_authnz_ldap.so
+LoadModule authz_core_module modules/mod_authz_core.so
+#LoadModule authz_dbd_module modules/mod_authz_dbd.so
+#LoadModule authz_dbm_module modules/mod_authz_dbm.so
+LoadModule authz_groupfile_module modules/mod_authz_groupfile.so
+LoadModule authz_host_module modules/mod_authz_host.so
+#LoadModule authz_owner_module modules/mod_authz_owner.so
+LoadModule authz_user_module modules/mod_authz_user.so
+LoadModule autoindex_module modules/mod_autoindex.so
+#LoadModule bucketeer_module modules/mod_bucketeer.so
+#LoadModule cache_module modules/mod_cache.so
+#LoadModule case_filter_module modules/mod_case_filter.so
+#LoadModule case_filter_in_module modules/mod_case_filter_in.so
+#LoadModule cern_meta_module modules/mod_cern_meta.so
+LoadModule cgi_module modules/mod_cgi.so
+#LoadModule charset_lite_module modules/mod_charset_lite.so
+#LoadModule dav_module modules/mod_dav.so
+#LoadModule dav_fs_module modules/mod_dav_fs.so
+LoadModule dav_lock_module modules/mod_dav_lock.so
+#LoadModule dbd_module modules/mod_dbd.so
+#LoadModule deflate_module modules/mod_deflate.so
+LoadModule dir_module modules/mod_dir.so
+#LoadModule disk_cache_module modules/mod_disk_cache.so
+#LoadModule dumpio_module modules/mod_dumpio.so
+#LoadModule echo_module modules/mod_echo.so
+LoadModule env_module modules/mod_env.so
+#LoadModule example_module modules/mod_example.so
+#LoadModule expires_module modules/mod_expires.so
+#LoadModule ext_filter_module modules/mod_ext_filter.so
+#LoadModule fcgid_module modules/mod_fcgid.so # did not work at runtime
+#LoadModule file_cache_module modules/mod_file_cache.so
+#LoadModule filter_module modules/mod_filter.so
+LoadModule headers_module modules/mod_headers.so
+#LoadModule ident_module modules/mod_ident.so
+#LoadModule imagemap_module modules/mod_imagemap.so
+LoadModule include_module modules/mod_include.so
+LoadModule info_module modules/mod_info.so
+LoadModule isapi_module modules/mod_isapi.so
+#LoadModule ldap_module modules/mod_ldap.so
+#LoadModule logio_module modules/mod_logio.so
+LoadModule log_config_module modules/mod_log_config.so
+#LoadModule log_forensic_module modules/mod_log_forensic.so
+LoadModule cache_disk_module modules/mod_cache_disk.so
+LoadModule mime_module modules/mod_mime.so
+#LoadModule mime_magic_module modules/mod_mime_magic.so
+LoadModule negotiation_module modules/mod_negotiation.so
+LoadModule proxy_module modules/mod_proxy.so
+LoadModule proxy_ajp_module modules/mod_proxy_ajp.so
+#LoadModule proxy_balancer_module modules/mod_proxy_balancer.so
+#LoadModule proxy_connect_module modules/mod_proxy_connect.so
+#LoadModule proxy_ftp_module modules/mod_proxy_ftp.so
+#LoadModule proxy_http_module modules/mod_proxy_http.so
+LoadModule rewrite_module modules/mod_rewrite.so
+LoadModule setenvif_module modules/mod_setenvif.so
+#LoadModule speling_module modules/mod_speling.so
+LoadModule ssl_module modules/mod_ssl.so
+LoadModule status_module modules/mod_status.so
+#LoadModule substitute_module modules/mod_substitute.so
+#LoadModule unique_id_module modules/mod_unique_id.so
+#LoadModule userdir_module modules/mod_userdir.so
+#LoadModule usertrack_module modules/mod_usertrack.so
+#LoadModule version_module modules/mod_version.so
+LoadModule vhost_alias_module modules/mod_vhost_alias.so
+
+<IfModule dir_module>
+DirectoryIndex neighbour.html parent.html main.html vd1.html vd2.html alternative.html
+</IfModule>
+
+<Directory "C:/neighbour">
+    Options Indexes FollowSymLinks Includes EXECCGI
+	AllowOverride ALL
+    Require all granted
+</Directory>
+
+<VirtualHost www.parent.com>
+ServerName www.parent.com
+DocumentRoot "C:/parent"
+<Directory "C:/parent">
+ Options Indexes FollowSymLinks Includes EXECCGI
+	AllowOverride ALL
+    Require all granted
+</Directory>
+</Virtualhost>
+
+<VirtualHost www.primary.com>
+ServerName www.parent.com
+DocumentRoot "C:/Main"
+<Directory "C:/Main">
+ Options Indexes FollowSymLinks Includes EXECCGI
+	AllowOverride ALL
+    Require all granted
+</Directory>
+</Virtualhost>
+
+<VirtualHost www.secondary.com>
+ServerName www.secondary.com
+DocumentRoot "C:/Alternative"
+<Directory "C:/Alternative">
+ Options Indexes FollowSymLinks Includes EXECCGI
+	AllowOverride ALL
+    Require all granted
+</Directory>
+</Virtualhost>
+
+Alias /VD1 "C:/Main/VD1"
+<Directory "C:/Main/VD1">
+ Options Indexes FollowSymLinks Includes EXECCGI
+	AllowOverride ALL
+    Require all granted
+Redirect 302 /VD1 http://www.secondary.com
+</Directory>
