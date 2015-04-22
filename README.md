@@ -1,13 +1,9 @@
 # vorp
-Web Dev Stuff
+Web Development Coursework
 
-Figured it might be a good idea to do the whole github thing
+Java is coming out of netbeans
+PHP is being done on koding
 
-Will be uploading class exercises here!
+The URL links to the github page
 
-java is coming out of netbeans
-PHP is being done on koding.com
-
-The URL links to ungit (when I have the devbox running)
-
-:D
+P.S. don't forget about 'Party Fridays'

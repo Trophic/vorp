@@ -1,0 +1,176 @@
+<!--  
+/*Author: Ben Hicks
+Date: 20.3.15 */
+-->
+
+<!DOCtype html>
+
+<html>
+<head>
+	<title>Index.php</title>
+</head>
+	<body>
+
+	<!--this below line is to dictate what type of form it shall be.-->
+		<form method="POST" action="Index.php">
+
+		<?php
+			print_r($_POST);
+				
+		
+		if(!empty($_POST)===true){
+		$errors = array();
+		//Here we declare the variables to lower the amount of typing needed to be done.
+		$fName		=$_POST['FirstName'];
+		$lName		=$_POST['LastName'];
+		$mNumb		=$_POST['MobileNumber'];
+		$eAddress	=$_POST['EmailAddress'];
+		$age		=$_POST['Age'];
+		$pAddress	=$_POST['PostalAddress'];
+		$fGoals		=$_POST['FitnessGoals'];
+		$mGoals		=$_POST['MindBeingGoals'];
+		$gender		= "";
+		$pTrainD	=$_POST['timeDay'];
+		
+		if(empty($fName)===true){
+		$errors[]= "<p>Your first name is required<p>";
+		}//above is first name validation check and error message
+
+			elseif(ctype_alpha($fName)===false){
+			$errors[]= "Only alphabetical characters please.";
+			}//this code should be testing the first name for alphabetic letters.
+
+			elseif(strlen($fName)>30){
+			$errors[]= "Name must be less than 30 characters<p>";
+			}//this code should check the name is below 25 characters in length
+
+		if(empty($lName)===true){
+		$errors[]= "Your last name is required.<p>";
+		}//above is the last name error message and validation
+
+			elseif(ctype_alpha($lName)===false){
+			$errors[]= "<p>Only alphabetical characters please.<p>";
+			}//this code should be testing the first name for alphabetic letters.
+
+			elseif(strlen($lName) >30){
+			$errors[]= "<p>Last Name must be less than 30 characters<p>";
+			}//this code should check the name is below 25 characters in length
+
+		if(empty($mNumb)===true){
+		$errors[]= "<p>Your mobile number is required.<p>";
+		}//Mobile number error message code is above
+
+			elseif(is_numeric($mNumb)===false){
+			$errors[]= "<p>Only numeric characters are valid.<p>";
+			}//Above is the number character checking code for the mobile section.
+
+			elseif(strlen($mNumb) >10){
+			$errors[]= "<p>Must be 10 numbers in length.<p>";
+			}//should check to see if the mobile number is below 10 characters which it should equal 10
+			
+			elseif(strlen($mNumb) <10){
+			$errors[]= "<p>Must be 10 numbers in length.<p>";
+			}//should check to see if the mobile number is greater than 10 characters which it should equal 10
+
+		if(empty($eAddress)===true){
+		$errors[]= "<p>Your email address is required<p>";
+		}//email validation code.
+		//	$eAddress = test_input($_POST["eAddress"]);
+			if (!filter_var($eAddress, FILTER_VALIDATE_EMAIL)){
+			$emailErr = "Invalid email format";
+		}
+		//Below is the age validation code. checking string length and if it is empty.
+		if(empty($age)===true){
+				$errors[]= "<p>Please enter your age.<p>";}
+			elseif(strlen($age) <2){
+				$errors[]= "<p>You have not entered your age correctly<p>";}
+			elseif(strlen($age) >2){
+				$errors[]= "<p>You have not entered your age correctly<p>";}
+			
+		}
+		
+		//checking to see if the gender button has been selected
+		if (isset($gender)===false){
+		$errors[]='<p>Please select your gender</p>';
+		}
+		
+		//below is the validation for drop down box.
+		if($_POST['timeDay'] == 'noSelection')
+		{
+		$errors[]="Please select a time of day from the list";
+		}	else{
+		$timeDay=$_POST['timeDay'];
+		}
+		
+		//check if $errors array is empty
+		if (!empty($errors)){
+			// loop through array elements contents to display error messages   
+			foreach($errors as $error)
+			echo '<p>'. $error .'</p>';
+			}else
+			echo "Success";
+		
+		?>
+		<!--creating input fields. Should be the areas the user will put in information-->
+		<br><label>Enter First Name:</label>
+		<br>
+		<input type="text" Name="FirstName" maxlength="25">
+		<br>
+		<label>Enter Last Name:</label>
+		<br>
+		<input type="text" Name="LastName" maxlength="30">
+		<br>
+		Enter Mobile Number
+		<br>
+		<input type="text" Name="MobileNumber" maxlength="10">
+		<br>
+		Enter Email Address
+		<br>
+		<input type="text" Name="EmailAddress">
+		<br>
+		Enter Age
+		<br>
+		<input type="text" Name="Age" maxlength="2">
+		<br>
+		Enter Address
+		<br>
+		<input type="text" Name="PostalAddress">
+		<br>
+		<!--below is the radio buttons for the choose sex option-->
+		Enter Gender
+		<br>
+		<input type="radio" Name="Gender" value="M" checked/> M
+		<input type="radio" Name="Gender" value="F"/> F 
+		<br>
+		Preferred Training Day
+		<br><!--here are check boxes which can all be selected or only one of them.-->
+		  <input type="checkbox" name="Monday" value="Monday"> Monday<br>
+		  <input type="checkbox" name="Tuesday" value="Tuesday"> Tuesday<br>
+		  <input type="checkbox" name="Wednesday" value="Wednesday"> Wednesday<br>
+		  <input type="checkbox" name="Thursday" value="Thursday"> Thursday<br>
+		  <input type="checkbox" name="Friday" value="Friday"> Friday<br>
+		  <input type="checkbox" name="Saturday Morning" value="Saturday Morning"> Saturday Morning<br>
+		<br>
+		  Preferred Time of Day
+		<br>
+		<select name=timeDay>
+		  <option value=" ">Make selection....</option>
+		  <option value="Morning" Morning </option>
+		  <option value="Evening">Evening</option></select>
+		  <br><br>
+		Fitness Goals
+		<br>
+		<textarea name="FitnessGoals" rows="10" cols="45"></textarea>
+		<br>
+		Mind/Being Goals
+		<br>
+		<textarea name="MindBeingGoals" rows="10" cols="45"></textarea>
+		<br>
+		<!--below code is to help make sure that any special characters used by the user are not going to crash
+		the site or muck up the code.-->
+
+
+		<input type="submit" value="Submit">
+		</form>
+	</body>
+</html>

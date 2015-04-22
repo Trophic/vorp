@@ -1,0 +1,527 @@
+<?php
+
+$selectedTitle = '';
+$selectedDay = '';
+$selectedMonth = '';
+$selectedYear = '';
+$selectedCourse = '';
+
+$male = 'unchecked';
+$female = 'unchecked';
+$other = 'unchecked';
+$yes = 'unchecked';
+$no = 'unchecked';
+
+if (isset($_POST['submit'])) {
+	
+	$errors = array();
+
+	// print_r($_POST);
+
+// TITLE DROPDOWN MENU VALIDATION
+	$title = $_POST['title'];
+
+	if (isset($_POST)) {
+
+		//Check to see if day has an input
+		if ($_POST['title'] === 'no-selection') {
+			$errors[] = 'Please select your Title.';
+		} else {
+			$selectedTitle = $_POST['title'];
+		}
+		
+	}
+
+// FAMILY-NAME & GIVEN-NAMES TEXTBOXES VALIDATION
+	if (!empty($_POST) === TRUE) {
+
+		$familyName = $_POST['family-name'];
+		$givenName1 = $_POST['given-name-1'];
+		$givenName2 = $_POST['given-name-2'];
+		
+
+		// 1. Check family-name HAS BEEN ENTERED in $_POST array:
+		if (empty($_POST['family-name']) === TRUE) {
+			$errors[] = 'You must enter a Family Name.';
+		}
+			 // 2. Check family-name input DOES NOT contains numbers, letters only
+		else { if (ctype_alpha($_POST['family-name']) === FALSE) {
+			$errors[] = 'Your Family Name must contain letters only.';
+			}
+			// 3. Check family-name input IS NOT too long, not > 25 characters
+			if (strlen($_POST['family-name']) > 25) {
+			$errors[] = 'You Family Name is too long, use max - 25 letters.';
+			}
+		}
+
+	/* given-name-1 vlaidation: */
+		// 1. Check given-name-1 HAS BEEN ENTERED in $_POST array:
+		if (empty($_POST['given-name-1']) === TRUE) {
+			$errors[] = 'You must enter a valid First Given Name.';
+		}
+			 // 2. Check given-name-1 input DOES NOT contains numbers, letters only
+		else { if (ctype_alpha($_POST['given-name-1']) === FALSE) {
+			$errors[] = 'Your First Given Name must contain letters only.';
+			}
+			// 3. Check given-name-1 input IS NOT too long, not > 25 characters
+			if (strlen($_POST['given-name-1']) > 25) {
+			$errors[] = 'You First Given Name is too long, use max - 25 letters.';
+			}
+		}
+
+	/* given-name-2 vlaidation: */
+		// 1. Check given-name-2 HAS BEEN ENTERED in $_POST array:
+		if (empty($_POST['given-name-2']) === TRUE) {
+			$errors[] = 'You must enter a valid Second Given Name.';
+		}
+			 // 2. Check given-name-2 input DOES NOT contains numbers, letters only
+		else { if (ctype_alpha($_POST['given-name-2']) === FALSE) {
+			$errors[] = 'Your Second Given Name must contain letters only.';
+			}
+			// 3. Check given-name-2 input IS NOT too long, not > 25 characters
+			if (strlen($_POST['given-name-2']) > 25) {
+			$errors[] = 'You Second Given Name is too long, use max - 25 letters.';
+			}
+		}
+	} // END (!empty($_POST) === TRUE)
+
+// DOB DROPDOWN MENU VALIDATION
+	$day = $_POST['day'];
+	$month = $_POST['month'];
+	$year = $_POST['year'];
+
+	if (empty($_POST) === FALSE) {
+
+		//Check to see if day has an input
+		if ($_POST['day'] === 'no-selection') {
+			$errors[] = 'Please select the Day you were born.';
+		} else {
+			$selectedDay = $_POST['day'];
+		}
+
+		//Check to see if month has an input
+		if ($_POST['month'] === 'no-selection') {
+			$errors[] = 'Please select the Month you were born.';
+		} else {
+			$selectedMonth = $_POST['month'];
+		}
+
+		//Check to see if year has an input
+		if ($_POST['year'] === 'no-selection') {
+			$errors[] = 'Please select the Year you were born.';
+		} else {
+			$selectedYear = $_POST['year'];
+		}
+
+	}
+
+// GENDER RADIOBUTTON VALIDATION
+	if (isset($_POST['gender'])) {
+		$gender = $_POST['gender'];
+
+		if ($gender == 'male') {
+			$male = 'checked';
+		} else if ($gender == 'female') {
+			$female = 'checked';
+		} else if ($gender == 'other') {
+			$other = 'checked';
+		}
+	} else 
+		$errors[] = 'Your Gender needs to be entered!';
+
+// BEST CONTACT TEXTBOX VALIDATION
+		$contactNumber = $_POST['best-number'];
+		// 1. Check best-number HAS BEEN ENTERED in $_POST array:
+		if (empty($_POST['best-number']) === TRUE) {
+			$errors[] = 'You must enter your Best Contact Number.';
+		}
+			// 2. Check best-number input DOES NOT contains letters, numbers only
+		else { if (is_numeric($_POST['best-number']) === FALSE) {
+			$errors[] = 'Your Best Contact Number must contain numbers only.';
+			}
+			// 3. Check best-number input IS NOT too long, not > 10 numbers
+		else { if (strlen($_POST['best-number']) > 10) {
+			$errors[] = 'Your Best Contact Number is too long, use max - 10 numbers.';
+			}
+		}
+	}
+
+// BEST EMAIL TEXTBOX VALIDATION
+		$bestEmail = $_POST['best-email'];
+		// 1. Check best-email HAS BEEN ENTERED in $_POST array:
+		if (empty($_POST['best-email']) === TRUE) {
+			$errors[] = 'You must enter your Best Email Address.';
+		}
+		// 2. Check best-email input DOES NOT contains letters, numbers only
+		else { if (!preg_match("/^[\w-]+(\.[\w-]+)*@" . "[\w-]+(\.[\w-]+)*(\.[A-Za-z]{2,})$/i", $_POST['best-email']))  {
+			$errors[] = 'You have not entered a Valid Email Address.';
+			}
+		}
+
+// SELECTED COURSE DROPDOWN MENU VALIDATION
+	$selectedCourse = $_POST['course-name'];
+	if (empty($_POST) === FALSE) {
+
+		//Check to see if year has an input
+		if ($_POST['course-name'] === 'no-selection') {
+			$errors[] = 'Please select the Course you are interested in.';
+		} else {
+			$selectedCourse = $_POST['course-name'];
+		}
+	}
+
+	$studyMonths = $_POST['study-months'];
+	if (empty($_POST['study-months'])) {
+		$errors[] = "You need to add the appropriate number of months to study!";
+	}
+
+	if ($_POST['study-months'] < 1) {
+		$errors[] = "Do you want to study at all this year?";
+	} elseif 
+		($_POST['study-months'] > 12 ) {
+		$errors[] = "We don't offer that many subjects within a year!";
+	}
+
+// PRIOR LEARNING RADIOBUTTON VALIDATION
+	if (isset($_POST['prior-learning'])) {
+		$priorLearning = $_POST['prior-learning'];
+
+		if ($priorLearning == 'yes') {
+			$yes = 'checked';
+		} else if ($priorLearning == 'no') {
+			$no = 'checked';
+		}
+	} else 
+		$errors[] = "You need to acknowledge YES or NO for Prior Learning.";
+
+// SUPPORTING DOCUMENTATION VALIDATION ???
+
+
+// WHY STUDY TEXTAREA VALIDATION
+	$whyStudy = $_POST['why-study-at-vu'];
+	// 1. Check why-study-at-vu HAS BEEN ENTERED in $_POST array:
+	if (empty($_POST['why-study-at-vu']) === TRUE) {
+		$errors[] = 'You must enter why you want to study at Vic Uni - Footscray Campus.';
+	}
+		// 2. Check why-study-at-vu input IS NOT too long, not > 500 letters
+	else { if (strlen($_POST['why-study-at-vu']) > 500) {
+		$errors[] = 'Your entry is too long, use max - 500 characters.';
+		}
+	}
+	// ERROR ARRAY - Loop through the array elements contents to display error messages
+		if (!empty($errors))
+			foreach ($errors as $error) {
+				echo "";
+			} else {  
+				    $post_url = 'success.php?';
+    /*this code redirects the user to a success.php page so that they do not keep refreshing this page and resubmitting
+    the same information.  It also allows us to redispaly the correctly submitted information.  It is not normally necessary to display 
+    this information as it would usually be inserted into a database table!!!
+    */
+			    foreach ($_POST AS $key=>$value){
+			      $post_url .= $key.'='.$value.'&';
+			    }
+			    $post_url = rtrim($post_url, '&');
+			    header('Location:' .$post_url);
+			    exit();
+			  }
+						
+} // END isset($_POST['submit'])
+
+
+/*
+Logic to accept 04 for mobile number and below for course
+CERT
+DIP
+ADV
+BA
+GRAD
+MSTR
+*/
+?>	
+<!DOCTYPE html>
+<html lang="en" />
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="author" content="Dan Stachlewski" />
+	<meta name="description" content=" " />
+	<meta name="keywords" content=" " />
+	<title>Student Interest | VU:</title>
+	<link rel="stylesheet" href="css/my-style.css">
+
+</head>
+
+<body>
+
+<nav>
+	
+</nav>
+<header>
+	
+</header>
+<div class="container">
+
+
+		
+	<section id="intro">
+		<h2>Welcome to our Online Student Registration:<br />
+                    <small>It's as simple 4 step process.</small>
+                </h2>
+                <p>1. Fill out the Form. <br />2. Follow the prompts.<br /> 3. Submit you information.<br /> 4. Check your email in 24hrs for a response.</p>
+                <p>This Form has been designed to speed up the process of initial student expression of interest and application to register for a course. As a new student this is where you get to introduce yourself, enter your contact information, attach any supporting documentation to help verify and expidite your registration. Just follow the prompts, and if you are having trouble please contact Student Admin on (03) 9345 5868 or by <a href="#">email.</a></p>
+                <p>Its as simple as 1, 2, 3 and 4. Good luck and welcome to Footscray Nicholson Campus | VU.</p>
+
+		<p></p>
+	</section><!-- /END section intro -->
+
+	<?php if(!empty($errors)): ?>
+		<div class="panel">
+			<ol class='error'><li><?php echo implode('</li><li>', $errors); ?></li></ol>
+		</div>
+		
+	<?php endif; ?>
+
+		
+	<section id="expression-of-interest">
+		<form id="student-interest" method="POST" action='<?php echo($_SERVER["PHP_SELF"]) ?>' enctype="multipart/form-data">
+			
+			<h2>You can start here...<br />
+			<br />
+			<hr />
+			<br />
+			
+                    <small class="tab">Enter all your details below.</small></h2>
+			<br />
+
+
+								<!-- TITLE DROPDOWN -->
+					<label class="title">Title</label>	  
+					<select class="title" name='title'>
+						<option value='no-selection'> -- Please select -- </option>
+						<option value='Mr' <?php if ($selectedTitle === 'Mr') { ?> selected='selected' <?php } ?> >Mr</option>
+						<option value='Ms' <?php if ($selectedTitle === 'Ms') { ?> selected='selected' <?php } ?> >Ms</option>
+						<option value='Miss' <?php if ($selectedTitle === 'Miss') { ?> selected='selected' <?php } ?> >Miss</option>
+						<option value='Mrs' <?php if ($selectedTitle === 'Mrs') { ?> selected='selected' <?php } ?> >Mrs</option>
+						<option value='Dr' <?php if ($selectedTitle === 'Dr') { ?> selected='selected' <?php } ?> >Dr</option>
+					</select>
+					<br />
+
+					<br />
+				<!-- FAMILY NAME1 field -->
+					<label class="family-name">Family Name</label>
+					<input class="family-name" type="text" name="family-name" value='<?php if (isset($_POST["family-name"])=== true) {echo trim($_POST["family-name"]);} ?>'  />
+					
+					<br />
+
+				<!-- GIVEN NAME1 field -->
+					<label class="given-name-1">Given Name</label>
+					<input class="given-name-1" type="text" name="given-name-1" value='<?php if (isset($_POST["given-name-1"])=== true) {echo trim($_POST["given-name-1"]);} ?>'  />
+					<br />
+
+				<!-- GIVEN NAME2 field -->
+					<label class="given-name-2">Middle Name</label>
+					<input class="given-name-2" type="text" name="given-name-2" value='<?php if (isset($_POST["given-name-2"])=== true) {echo trim($_POST["given-name-2"]);} ?>'  />
+					<br />
+			<br />
+			<br />
+			<hr />
+			<br />
+			<br />
+
+<!-- DOB label -->
+					<label class="dob">Date of Birth</label>
+					<br />
+
+<!-- <option value='Mr'  selected='selected'  >Mr</option>
+	 <option value="12"  selected="selected"  >12</option> -->
+
+
+				<!-- DAY dropdown menu -->
+				<div class="dob">
+					<label class="day">Day</label>
+					<select class="day" name='day'>
+						<option value='no-selection'> -- Please select -- </option>
+					<?php 
+						for ($i = 1; $i <= 31; $i++) {
+							echo '<option value="'.$i.'" ';
+		      						if ($selectedDay == $i) { echo ' selected="selected"'; }
+		     				echo '>'.$i.'</option>';
+		    				}  /* end for loop */
+					 ?>
+					 </select>
+					<br />
+				</div>
+				
+				<!-- MONTH dropdown menu -->
+				<div class="dob">
+					<label class="month">Month</label>
+					 <select class="month" name="month">
+					 	<option value='no-selection'> -- Please select -- </option>
+					 	<?php 
+					 		$months = array(
+					 					1 => 'January',
+					 					2 => 'February',
+					 					3 => 'March',
+					 					4 => 'April',
+					 					5 => 'May',
+					 					6 => 'June',
+					 					7 => 'July',
+					 					8 => 'August',
+					 					9 => 'September',
+					 					10 => 'October',
+					 					11 => 'November',
+					 					12 => 'December'
+					 						);
+					 		foreach($months as $day => $month) {
+					 			echo '<option value="' . $day .'"';
+					 			if($selectedMonth == $day) { echo ' selected="selected"'; }
+					 			echo '">' . $month . '</option>';
+						    } /* end for loop */
+
+					 	?>
+					</select>
+					<br />
+					</div>
+
+				<!-- YEAR dropdown menu -->
+				<div class="dob">
+					<label class="year">Year</label>
+					<select class="year" name="year">
+						<option value='no-selection'> -- Please select -- </option>
+						<?php
+
+							$year = 2000;
+							for ($i = $year - 58; $i <= $year + 1; $i++) {
+							echo '<option value="'.$i.'" ';
+		      				if ($selectedYear == $i) { echo ' selected="selected"'; }
+		     				echo '>'.$i.'</option>';
+		    				}  /* end for loop */
+													?>
+					</select>
+					<br />
+					</div>
+			<br />
+			<br />
+			<br />
+			<br />
+			<hr />
+				<!-- GENDER radio-buttons -->
+	
+						<label class="gender" for="Gender"></label><br />
+							
+				
+					<div class="gender-button">	
+						<label class="gender" for="Gender">Gender</label><br />
+					</div>
+					<div class="gender-button">	
+						<label><input class="gender" type='radio' name='gender' value='male' <?php echo $male ?>/>Male</label>
+					</div>
+					<div class="gender-button">
+						<label><input class="gender" type='radio' name='gender' value='female' <?php echo $female ?>/>Female</label>
+					</div>
+					<div class="gender-button">
+						<label><input class="gender" type='radio' name='gender' value='other' <?php echo $other ?>/>Other</label>
+					</div>
+					<br />
+			<br />
+			<hr />
+			<br />
+			<br />
+				<!-- CONTACT NUMBER field -->
+					<label class="best-number">Best Contact Number</label>
+					<input class="best-number" type="text" name="best-number" value='<?php if (isset($_POST["best-number"])=== true) {echo trim($_POST["best-number"]);} ?>'  />
+					<br />
+				
+				<!-- EMAIL ADDRESS field -->
+					<label class="best-email">Best Email Address</label>
+					<input class="best-email" type="text" name="best-email" value='<?php if (isset($_POST["best-email"])=== true) {echo trim($_POST["best-email"]);} ?>'  />
+					<br />
+					<br />
+
+			<br />
+			<hr />
+			<br />
+			<br />
+			<br />
+
+
+<!-- COURSE dropdown menu -->
+<label class="course-name">Which Courses are you interested in?</label>
+<select class="course-name" name="course-name">
+<option value='no-selection'> -- Please select -- </option>
+<option value='CERT3-IT' <?php if ($selectedCourse === 'CERT3-IT') { ?> selected='selected' <?php } ?> >Certificate III in Information, Digital Media &amp; Technology (CERT3-IT)</option>
+<option value='CERT4-IT' <?php if ($selectedCourse === 'CERT4-IT') { ?> selected='selected' <?php } ?> >Certificate IV in Information Technology (CERT4-IT)</option>
+<option value='DIP-IT-NETWRK' <?php if ($selectedCourse === 'DIP-IT-NETWRK') { ?> selected='selected' <?php } ?> >Diploma of Information Technology Networking (DIP-IT-NETWRK)</option>
+<option value='DIP-WEB-DEV' <?php if ($selectedCourse === 'DIP-WEB-DEV') { ?> selected='selected' <?php } ?> >Diploma of Website Development (DIP-WEB-DEV)</option>
+<option value='DIP-IT' <?php if ($selectedCourse === 'DIP-IT') { ?> selected='selected' <?php } ?> >Diploma of Information Technology (DIP-IT)</option>
+<option value='ADV-DIP-IT-NETWRK' <?php if ($selectedCourse === 'ADV-DIP-IT-NETWRK') { ?> selected='selected' <?php } ?> >Advanced Diploma of Network Security (ADV-DIP-IT-NETWRK)</option>
+<option value='ADV-DIP-IT' <?php if ($selectedCourse === 'ADV-DIP-IT') { ?> selected='selected' <?php } ?> >Advanced Diploma of Information Technology (ADV-DIP-IT)</option>
+<option value='BA-IT-NETWRK' <?php if ($selectedCourse === 'BA-IT-NETWRK') { ?> selected='selected' <?php } ?> >Bachelor of Information Technology (Network and System Computing) (BA-IT-NETWRK)</option>
+<option value='GRAD-DIP-COMP-SCI' <?php if ($selectedCourse === 'GRAD-DIP-COMP-SCI') { ?> selected='selected' <?php } ?> >Graduate Diploma in Computer Science (GRAD-DIP-COMP-SCI)</option>
+<option value='MSTR-SCI' <?php if ($selectedCourse === 'MSTR-SCI') { ?> selected='selected' <?php } ?> >Master of Science (Computer Science) (MSTR-SCI)</option>
+<option value='MSTR-APP-IT' <?php if ($selectedCourse === 'MSTR-APP-IT') { ?> selected='selected' <?php } ?> >Master of Applied Information Technology (MSTR-APP-IT)</option>
+</select>
+<br />
+<label class="study-months">How many months would suit your study needs?</label>
+<input class="study-months" type="text" name="study-months" value='<?php if (isset($_POST["study-months"])=== true) {echo trim($_POST["study-months"]);} ?>'  /><br />
+<br />
+<label class="preferred-course">Which course would you like to do the most?</label>
+<input class="preferred-course" type="text" name="study-months" value='<?php if (isset($_POST["study-months"])=== true) {echo trim($_POST["study-months"]);} ?>'  /><br />
+<br />
+
+
+				<!-- PRIOR LEARNING radio-buttons -->
+					<div class="learning-radio">
+						<label class="prior-learning" for="Gender">Prior Learning</label><br />
+					</div>
+					<div class="learning-radio">
+						<label><input class="prior-learning-radio" type='radio' name='prior-learning' value='yes' <?php echo $yes ?>/>Yes</label>
+					</div>
+					<div class="learning-radio">
+						<label><input class="prior-learning-radio" type='radio' name='prior-learning' value='no' <?php echo $no ?>/>No</label>
+					<br />
+					</div>
+
+					<div class="support">
+						<p> </p>
+					</div>
+					<div class="support-doc">
+					<label class="supporting-docs">Add Supporting Documanetation:</label><br />
+					</div>
+					<div class="support-doc">
+					<input class="supporting-docs" type="file" name="file-to-upload" >
+					</div>
+					<!-- http://www.w3schools.com/php/php_file_upload.asp -->
+					<br />
+
+
+					<label class="why-study">In 500 words or less, please tell us why you want to study at Footscray VUT.</label>
+					<br />
+					<textarea name="why-study-at-vu" rows="10" col="50"><?php if (isset($_POST['why-study-at-vu']) === true) { echo htmlspecialchars($_POST['why-study-at-vu']);}?></textarea>
+					<br />
+					<input type="submit" name="submit" value="Submit">
+
+			
+		</form><!-- /END form student-interest -->
+
+
+	</section> <!-- /END section expression-of-interest -->
+
+</div>
+<footer>
+	<div class="legal">
+	<h3><?php echo 'Copyright &copy; ' . date('Y'); ?></h3>	
+	<h3>
+		Footscray Nicholson Campus<br />
+		<small>Victoria University.</small>
+	</h3>
+	
+		
+	</div>
+</footer>
+
+
+</body>
+</html>
