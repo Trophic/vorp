@@ -1,0 +1,66 @@
+public class MovieTickClass {
+private String movieName;
+private int movieSelection;
+private String movieDay;
+private double ticketPrice;
+private int cTicketQty;
+private int aTicketQty;
+private double totalCost;
+
+    public MovieTickClass(String movieName, int movieSelection, String movieDay, double ticketPrice, int cTicketQty, int aTicketQty) {
+        this.movieName = movieName;
+        this.movieSelection = movieSelection;
+        this.movieDay = movieDay;
+        this.ticketPrice = ticketPrice;
+        this.cTicketQty = cTicketQty;
+        this.aTicketQty = aTicketQty;
+    }
+
+
+
+
+
+public String getMovieName(){
+    return movieName;
+}
+
+public String getMovieDay(){
+    return movieDay;
+}
+
+public double getTicketPrice(){
+ return ticketPrice;   
+}
+
+public int getcTicketQty(){
+    return cTicketQty;
+}
+    
+public int getATicketQty(){
+    return aTicketQty;
+}    
+
+public double getTotalCost()
+ {
+   return totalCost;        
+ }
+
+    public void setMovieName(String movieName) {
+        this.movieName = movieName;
+    }
+
+    public void setMovieSelection(int movieSelection) {
+        this.movieSelection = movieSelection;
+    }
+
+    public void setcTicketQty(int cTicketQty) {
+        this.cTicketQty = cTicketQty;
+    }
+
+    public void setaTicketQty(int aTicketQty) {
+        this.aTicketQty = aTicketQty;
+    }
+
+
+
+}

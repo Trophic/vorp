@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,28 +5,11 @@
 <title>Hot cross bun order page</title>
 </head>
 <body>
-<<<<<<< HEAD
-<?php
-
-?>
 <div id="form_container">
-=======
-	<div id="form_container">
->>>>>>> origin/gh-pages
-	
 		<h1><a>Hot cross bun order</a></h1>
 		<form id="hotbuns" class="hotbunsform"  method="post" action="/vorp/success.php">
 					<div class="form_description">
-			<h2>Hot cross bun order form</h2>
-<<<<<<< HEAD
-		</div>						
-			<ul >
-=======
-			<p></p>
-		</div>						
-			<ul >
-			
->>>>>>> origin/gh-pages
+			<h2>Hot cross bun order form</h2>	
 		<li id="name" >
 		<label class="description" for="delivery">Name for delivery
         </label>
@@ -82,39 +64,27 @@
 		<div class="right">
 			<input id="raddress" name="raddress" class="element text medium" value="" type="text">
 			<label for="raddress">State</label>
-		</div>
-	
+						</div>
 		<div class="left">
 			<input id="pcode" name="pcode" class="element text medium" maxlength="4" value="XXXX" type="text">
-<<<<<<< HEAD
 			<label for="pcode">Postal Code</label>
-=======
 			<label for="pcode">Postal</label>
->>>>>>> origin/gh-pages
 		</div>
-	
 		<div class="right">
 			<select class="element select medium" id="country" name="country"> 
 			<option value="" selected="selected"></option>
-<<<<<<< HEAD
 <!--option value="Afghanistan" >Afghanistan</option>
-=======
 <option value="Afghanistan" >Afghanistan</option>
->>>>>>> origin/gh-pages
 <option value="Albania" >Albania</option>
 <option value="Algeria" >Algeria</option>
 <option value="Andorra" >Andorra</option>
 <option value="Antigua and Barbuda" >Antigua and Barbuda</option>
 <option value="Argentina" >Argentina</option>
-<<<<<<< HEAD
 <option value="Armenia" >Armenia</option-->
 <option value="Australia" >Australia</option>
 <!--option value="Austria" >Austria</option>
-=======
 <option value="Armenia" >Armenia</option>
-<option value="Australia" >Australia</option>
 <option value="Austria" >Austria</option>
->>>>>>> origin/gh-pages
 <option value="Azerbaijan" >Azerbaijan</option>
 <option value="Bahamas" >Bahamas</option>
 <option value="Bahrain" >Bahrain</option>
@@ -174,11 +144,8 @@
 <option value="Grenada" >Grenada</option>
 <option value="Guatemala" >Guatemala</option>
 <option value="Guinea" >Guinea</option>
-<<<<<<< HEAD
 <option value="GuineaBissau" >GuineaBissau</option>
-=======
 <option value="Guinea-Bissau" >Guinea-Bissau</option>
->>>>>>> origin/gh-pages
 <option value="Guyana" >Guyana</option>
 <option value="Haiti" >Haiti</option>
 <option value="Honduras" >Honduras</option>
@@ -303,12 +270,7 @@
 <option value="Vietnam" >Vietnam</option>
 <option value="Yemen" >Yemen</option>
 <option value="Zambia" >Zambia</option>
-<<<<<<< HEAD
 <option value="Zimbabwe" >Zimbabwe</option-->
-=======
-<option value="Zimbabwe" >Zimbabwe</option>
-	
->>>>>>> origin/gh-pages
 			</select>
 		<label for="country">Country</label>
 	</div> 
@@ -347,9 +309,8 @@
 			</ul>
 		</form>
 	</div>
-<<<<<<< HEAD
-<?php
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+	<?php
+	if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $name = test_input($_POST["name"]);
   $email = test_input($_POST["email"]);
   $website = test_input($_POST["website"]);
@@ -384,8 +345,5 @@ function test_input($data) {
   return $data;
 	}
 	?>
-	    
-=======
->>>>>>> origin/gh-pages
 	</body>
 </html>
