@@ -1,0 +1,195 @@
+<!--  
+/*Author: Ben Hicks
+Date: 20.3.15 */
+-->
+
+<!DOCtype html>
+		<?php
+			print_r($_POST);
+			$gender_m = 'unchecked';
+			$gender_f = 'unchecked';	
+			$SelectedDay = '';
+			
+			
+		if(!empty($_POST)===true){
+		$errors = array();
+		//Here we declare the variables to lower the amount of typing needed to be done.
+		$fName		=$_POST['FirstName'];
+		$lName		=$_POST['LastName'];
+		$mNumb		=$_POST['MobileNumber'];
+		$eAddress	=$_POST['EmailAddress'];
+		$age		=$_POST['Age'];
+		$pAddress	=$_POST['PostalAddress'];
+		$fGoals		=$_POST['FitnessGoals'];
+		$mGoals		=$_POST['MindBeingGoals'];
+		$gender		= "";
+		$pTimeD		=$_POST['timeDay'];
+		
+		if(empty($fName)===true){
+		$errors[]= "<p>Your first name is required<p>";
+		}//above is first name validation check and error message
+
+			elseif(ctype_alpha($fName)===false){
+			$errors[]= "Only alphabetical characters please.";
+			}//this code should be testing the first name for alphabetic letters.
+
+			elseif(strlen($fName)>30){
+			$errors[]= "Name must be less than 30 characters<p>";
+			}//this code should check the name is below 25 characters in length
+
+		if(empty($lName)===true){
+		$errors[]= "Your last name is required.<p>";
+		}//above is the last name error message and validation
+
+			elseif(ctype_alpha($lName)===false){
+			$errors[]= "<p>Only alphabetical characters please.<p>";
+			}//this code should be testing the first name for alphabetic letters.
+
+			elseif(strlen($lName) >30){
+			$errors[]= "<p>Last Name must be less than 30 characters<p>";
+			}//this code should check the name is below 25 characters in length
+
+		if(empty($mNumb)===true){
+		$errors[]= "<p>Your mobile number is required.<p>";
+		}//Mobile number error message code is above
+
+			elseif(is_numeric($mNumb)===false){
+			$errors[]= "<p>Only numeric characters are valid.<p>";
+			}//Above is the number character checking code for the mobile section.
+
+			elseif(strlen($mNumb) >10){
+			$errors[]= "<p>Must be 10 numbers in length.<p>";
+			}//should check to see if the mobile number is below 10 characters which it should equal 10
+			
+			elseif(strlen($mNumb) <10){
+			$errors[]= "<p>Must be 10 numbers in length.<p>";
+			}//should check to see if the mobile number is greater than 10 characters which it should equal 10
+
+		if(empty($eAddress)===true){
+		$errors[]= "<p>Your email address is required<p>";
+		}//email validation code.
+		//	$eAddress = test_input($_POST["eAddress"]);
+			if (filter_var($eAddress, FILTER_VALIDATE_EMAIL)===false){
+			$errors[] = "<p>Invalid email format<p>";
+		}
+		//Below is the age validation code. checking string length and if it is empty.
+		if(empty($age)===true){
+				$errors[]= "<p>Please enter your age.<p>";
+	}
+			elseif(strlen($age) <2){
+				$errors[]= "<p>You have not entered your age correctly<p>";}
+			elseif(strlen($age) >2){
+				$errors[]= "<p>You have not entered your age correctly<p>";}
+
+		//Below will be a basic code validation for address. Should just be if empty please fill field.
+		if(empty($pAddress)==true){
+		$errors[]= "<p>Please fill postal address field.<p>";}
+		
+		//checking to see if the gender button has been selected
+		if (isset($gender)===false){
+		$errors[]='<p>Please select your gender</p>';
+		}
+		
+		//Follow code will hopefully check to see that 1 check box has been selected.
+		if 	(!isset($_POST['Monday']) && !isset($_POST['Tuesday']) && !isset($_POST['Wednesday']) && !isset($_POST['Thursday']) 
+			&& !isset($_POST['Friday']) && !isset($_POST['Saturday Morning'])) {
+		   $errors[]="<p>Please select a day<p>";
+		}
+		
+		//below is the validation for drop down box.
+		if($pTimeD == "No Selection")
+		{
+		$errors[]="<p>Please select a time of day from the list<p>";
+		}
+		else{
+		$SelectedDay = $pTimeD;
+		}
+		
+		//check if $errors array is empty
+		if (!empty($errors)){
+			// loop through array elements contents to display error messages   
+			echo '<ul>';
+			foreach($errors as $error)
+			echo '<li>', $error ,'</li>';
+			}else {
+			echo "Success";
+			}
+}		
+		?>
+<html>
+<head>
+	<title>Index.php</title>
+	<link href="mystyle.css" rel="stylesheet">
+	<!--<p><img id="Banner" src="Image-1.jpg" alt="Banner">-->
+</head>
+<body>
+<div class="container">
+	<!--this below line is to dictate what type of form it shall be.-->
+		<form method="POST" action="Index.php">
+		<h1>Royale Fitness Application Form</h1>
+		<h3>"Be the BEST you!"</h3>
+		<!-- Make a list of tabs for show-->
+		<div><ul>
+		<li style="list-style-type: none;"> Home</li>
+		<li style="list-style-type: none;"> About</li>
+		<li style="list-style-type: none;"> Contact</li>
+		<li style="list-style-type: none;"> Location</li>
+		<li style="list-style-type: none;"> Trainers</li></ul><div>
+		<!--creating input fields. Should be the areas the user will put in information-->
+		<br><h4>Enter First Name:</h4>
+		<input type="text" Name="FirstName" maxlength="25">
+		<br>
+		<h4>Enter Last Name:</h4>
+		<input type="text" Name="LastName" maxlength="30">
+		<br>
+		<h4>Enter Mobile Number</h4>
+		<input type="text" Name="MobileNumber" maxlength="10">
+		<br>
+		<h4>Enter Email Address</h4>
+		<input type="text" Name="EmailAddress">
+		<br>
+		<h4>Enter Age</h4>
+		<input type="text" Name="Age" maxlength="2">
+		<br>
+		<h4>Enter Address</h4>
+		<input type="text" Name="PostalAddress">
+		<br>
+		<!--below is the radio buttons for the choose gender option-->
+		<h4>Enter Gender</h4>
+		<input type="radio" Name="Gender" value="M" <?php echo $gender_m; ?>/> Male
+		<input type="radio" Name="Gender" value="F" <?php echo $gender_f; ?>/> Female 
+		<br>
+		<h4>Preferred Training Day</h4>
+		<!--here are check boxes which can all be selected or only one of them.-->
+		  <input type="checkbox" name="Monday" value="Monday"> Monday<br>
+		  <input type="checkbox" name="Tuesday" value="Tuesday"> Tuesday<br>
+		  <input type="checkbox" name="Wednesday" value="Wednesday"> Wednesday<br>
+		  <input type="checkbox" name="Thursday" value="Thursday"> Thursday<br>
+		  <input type="checkbox" name="Friday" value="Friday"> Friday<br>
+		  <input type="checkbox" name="Saturday Morning" value="Saturday Morning"> Saturday Morning<br>
+		<br>
+		  Preferred Time of Day
+		<br><br>
+		<select name=timeDay>
+		  <option value="No Selection">No Selection</option>
+		  <option value="Morning"<?php if ($SelectedDay === 'Morning') {?> selected='selected' <?php }?> >Morning </option>
+		  <option value="Evening"<?php if ($SelectedDay === 'Evening') {?> selected='selected' <?php }?> >Evening</option></select>
+		  <br>
+		<h4>Fitness Goals</h4>
+		<h4>Put down any goals you may have.</h4><br>
+		<textarea name="FitnessGoals" rows="10" cols="45"></textarea>
+		<br><br>
+		<h4>Mind/Being Goals</h4>
+		<h4>Put down any goals you may have.</h4><br>
+		<textarea name="MindBeingGoals" rows="10" cols="45"></textarea>
+		<br>
+		<!--below code is to help make sure that any special characters used by the user are not going to crash
+		the site or muck up the code.-->
+
+
+		<input type="submit" value="Submit">
+		</form>
+		
+		</div>
+	</body>
+</html>
