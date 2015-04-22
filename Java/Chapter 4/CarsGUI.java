@@ -1,7 +1,6 @@
 package carex;
 
 
-import carex.Car;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
@@ -13,7 +12,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author s4523542
+ * @author s
  */
 public class CarManager extends javax.swing.JFrame {
 
@@ -231,7 +230,7 @@ public class CarManager extends javax.swing.JFrame {
     }// </editor-fold>                        
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        // TODO add your handling code here:
+        //declare variables
         String manufacturer = "";
         String year = "";
         String strKilowatts = "";
@@ -264,16 +263,27 @@ public class CarManager extends javax.swing.JFrame {
         
         jTextArea1.append(outputData + '\n');
       
-    }                                        
+    }      
+/*  private void quitActionPerformed(java.awt.event.ActionEvent evt) {                                     
+    //exit button
+        System.exit(0);        
+    }                                    
 
+    private void clearActionPerformed(java.awt.event.ActionEvent evt) {                                      
+    // clear textfields
+        manufact.setText("");
+        regonum.setText("");
+        kilowatts.setText("");
+    } 
+*/
+    
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        // TODO add your handling code here:
+        //clear jtextarea
         jTextArea1.setText("");
-        
     }                                        
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        // TODO add your handling code here:
+        //display all cars
         Car orderObject1;
         
         for (int x = 0; x < carList.size(); x++)
@@ -289,13 +299,16 @@ public class CarManager extends javax.swing.JFrame {
         String outputData = orderObject1.getManufacturer() + '\t' +
              orderObject1.getRegoNumber() + '\t' + orderObject1.getYear() + '\t'
                + orderObject1.getKilowatts();
-       
+       //display data
         jTextArea1.append(outputData + '\n');
+        // ie. if array=0,1,2,3 the function calls each value one at a time, 
+        // assigns each value to carobject then uses the class file methods 
+        // to display the data in the jtextfield
         }
     }                                        
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        // TODO add your handling code here:
+        // search button
         Car orderObject1;
         String userInput = "";
         boolean foundMatch = false;
@@ -313,7 +326,7 @@ public class CarManager extends javax.swing.JFrame {
             if (userInput.equals(orderObject1.getRegoNumber()))
             {
                 foundMatch = true;
-                
+                //if found display message
                 JOptionPane.showMessageDialog(null, "Match Found!!");
             
             String outputData = orderObject1.getManufacturer() + '\t' +
@@ -323,7 +336,7 @@ public class CarManager extends javax.swing.JFrame {
             jTextArea1.append(outputData + '\n');
             }      
         }// end loop
-        
+        //if nothing is found display message
         if(foundMatch == false)
         {
             JOptionPane.showMessageDialog(null, "None of cars match the registration!");
@@ -350,13 +363,13 @@ public class CarManager extends javax.swing.JFrame {
                 foundMatch = true;
                 
                 JOptionPane.showMessageDialog(null, "Match Found!!" + '\n' + "Deleted");
-           
+           //removes 
                 carList.remove (x);
             }      
         }// end loop
        //The following code is going to clear the text area, then print all remaining cars in the array
         jTextArea1.setText("");
-       //jButton2 is the clear button. jButton3 is the display car information button
+       //jButton3 is the display car information button
        jButton3.doClick();
     }                                        
 
