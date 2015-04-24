@@ -1,0 +1,45 @@
+public class Student {
+    //declare private variables
+    private String name;
+    private String dateOfBirth;
+    private String studentID;
+    
+    //don't forget to use "rightclick>insertcode>constructor+getter methods+setter methods" to save a bunch of time
+    
+    //public constructor
+    public Student(){
+    }
+    
+    //constructor
+    public Student(String name, String dateOfBirth, String studentID) {
+        this.name = name;
+        this.dateOfBirth = dateOfBirth;
+        this.studentID = studentID;
+    }
+    
+    //methods
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public String getStudentID() {
+        return studentID;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDateOfBirth(String dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public void setStudentID(String studentID) {
+        this.studentID = studentID;
+    }
+}
