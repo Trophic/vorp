@@ -1,0 +1,184 @@
+package Chapter4;
+
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+
+public class StudenrolGUI extends javax.swing.JFrame {
+    
+//create arraylist
+    ArrayList studList = new ArrayList ();
+    /**
+     * Creates new form StudenrolGUI
+     */
+    public StudenrolGUI()
+            {
+        initComponents();
+        Welcome.moveToFront();
+        
+    }
+    //THIS IS WHERE THE NETBEANS JIBBER JABBER GOES
+    
+     private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {                                             
+        //exit button
+        System.exit(0);
+    }                                            
+
+    private void copyMenuItemActionPerformed(java.awt.event.ActionEvent evt) {                                             
+        //shows display
+        Doutput.moveToFront();
+    }                                            
+
+    private void datainputActionPerformed(java.awt.event.ActionEvent evt) {                                          
+        //shows input
+        Dinput.moveToFront();
+    }                                         
+
+    private void continuebutActionPerformed(java.awt.event.ActionEvent evt) {                                            
+        //moves welcome screen to back
+        Welcome.moveToBack();
+    }                                           
+
+    private void clear1ActionPerformed(java.awt.event.ActionEvent evt) {                                       
+        // clears textfields
+        nametxt.setText("");
+        studIDtxt.setText("");
+        dobtxt.setText("");
+    }                                      
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        //variables
+        String name = "";
+        String dateOfBirth="";
+        String StudentID="";
+        
+        //recieve values
+        name = nametxt.getText();
+        dateOfBirth= dobtxt.getText();
+        StudentID = studIDtxt.getText();
+        
+        //check if empty
+         if (dateOfBirth.isEmpty())
+        {
+            JOptionPane.showMessageDialog(null, "Please enter a name");
+            return;
+        }
+         
+          if (StudentID.isEmpty())
+        {
+            JOptionPane.showMessageDialog(null, "Please enter a name");
+            return;
+        }
+          
+         if (name.isEmpty())
+        {
+            JOptionPane.showMessageDialog(null, "Please enter a name");
+            return;
+        }
+         
+        //constructor
+        Student studObject = new Student(name,dateOfBirth,StudentID);
+        
+        //load new object into the arraylist
+        studList.add(studObject);
+        
+        //confirmation message
+        JOptionPane.showMessageDialog(null, "Successfully entered student");
+    }                                        
+
+    private void clear2ActionPerformed(java.awt.event.ActionEvent evt) {                                       
+     // clear text area
+    display.setText(" ");
+    }                                      
+
+    private void displayalldataActionPerformed(java.awt.event.ActionEvent evt) {                                               
+     //display all data
+        //load object
+        Student studObject;
+        
+        //point to next object in array and place it in the carObject variable
+        for (int x = 0; x< studList.size(); x++)
+        {
+            studObject = (Student)studList.get(x);
+            
+        //display objects
+        String outputData = studObject.getName()+ '\t' 
+                + studObject.getDateOfBirth()+ '\t' 
+                + studObject.getStudentID();
+        display.append(outputData + '\n');
+        }
+    }                                              
+
+    private void searchbutActionPerformed(java.awt.event.ActionEvent evt) {                                          
+        //search through array
+        Student studObject;
+        String Usearch ="";
+        boolean foundmatch = false;
+        
+        //get data from textfield
+        Usearch = searchtxt.getText();
+        
+        //check if empty
+        if (Usearch.isEmpty())
+        {
+            JOptionPane.showMessageDialog(null, "Please enter a name");
+            return;
+        }
+       
+        //loop through array
+        for (int x = 0; x< studList.size(); x++)
+            
+        {//assign array values to studobject
+            studObject = (Student)studList.get(x);
+            //check name for match with usearch, if match display message
+            if (Usearch.equals(studObject.getName()))
+            {
+                foundmatch = true;
+                
+                JOptionPane.showMessageDialog(null, "Match found!");
+                
+                String outputData = studObject.getName() + '\t' 
+                + studObject.getDateOfBirth()+ '\t' 
+                + studObject.getStudentID();
+                display.append(outputData + '\n');
+            }
+        }
+        //otherwise display failure message
+        if (foundmatch==false)
+        JOptionPane.showMessageDialog(null, "none of the students match the registration");   
+    }                                         
+
+    // Variables declaration - do not modify                     
+    private javax.swing.JInternalFrame Dinput;
+    private javax.swing.JInternalFrame Doutput;
+    private javax.swing.JInternalFrame Welcome;
+    private javax.swing.JButton clear1;
+    private javax.swing.JButton clear2;
+    private javax.swing.JButton continuebut;
+    private javax.swing.JMenuItem copyMenuItem;
+    private javax.swing.JMenuItem datainput;
+    private javax.swing.JDesktopPane desktopPane;
+    private javax.swing.JTextArea display;
+    private javax.swing.JButton displayalldata;
+    private javax.swing.JTextField dobtxt;
+    private javax.swing.JMenu editMenu;
+    private javax.swing.JMenuItem exitMenuItem;
+    private javax.swing.JMenu fileMenu;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JMenuBar menuBar;
+    private javax.swing.JTextField nametxt;
+    private javax.swing.JMenuItem openMenuItem;
+    private javax.swing.JMenuItem saveAsMenuItem;
+    private javax.swing.JMenuItem saveMenuItem;
+    private javax.swing.JButton searchbut;
+    private javax.swing.JTextField searchtxt;
+    private javax.swing.JTextField studIDtxt;
+    // End of variables declaration                   
+
+}
