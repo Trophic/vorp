@@ -1,0 +1,46 @@
+public class PizzaOrder {
+//class variables
+    private String pizzaName = "";
+    private String pizzaSize = "";
+    private double cost = 0.00;
+    private boolean extraCheese;
+//constructor
+    
+    public PizzaOrder (String pizzaType, String size, boolean cheese)
+    {
+        //assign incoming data
+        pizzaName = pizzaType;
+        pizzaSize = size;
+        extraCheese = cheese;
+    }
+//methods
+    public String getSize()
+    {
+        return pizzaSize;
+    }
+    public String getPizzaName()
+    {
+        return pizzaName;
+    }
+    public double getCost()
+    {
+    if (pizzaSize.equals("small"))
+        {
+            cost = 10.00;
+        }
+    if (pizzaSize.equals("medium"))
+        {
+            cost = 15.00;
+        }
+    if (pizzaSize.equals("large"))
+        {
+            cost = 18.00;
+        }
+    if (extraCheese == true)
+        {
+            cost = cost + 1.50;
+        }
+    return cost;
+    }
+    
+}
