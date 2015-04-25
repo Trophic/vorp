@@ -13,7 +13,7 @@ public class Pizzagui extends javax.swing.JFrame {
     
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
         //declare variables
-        String ptyp = "";
+        String ptyp;
         String psiz ="";
         boolean chez= false;
         
