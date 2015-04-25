@@ -1,0 +1,69 @@
+import javax.swing.JOptionPane;
+
+public class Pizzagui extends javax.swing.JFrame {
+
+    /**
+     * Creates new form Pizzagui
+     */
+    public Pizzagui() {
+        initComponents();
+    }
+    
+    //netbeans stuff
+    
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        //declare variables
+        String ptyp = "";
+        String psiz ="";
+        boolean chez= false;
+        
+        //reading form textfield
+        ptyp = jTextField4.getText();
+        
+        //check for empty
+        if (ptyp.isEmpty())
+        {
+            JOptionPane.showMessageDialog(null, "Please enter a pizza type");
+            return;
+        }
+        
+        //reading radio buttons
+        if (jsmall.isSelected())
+        {
+            psiz = "small";
+        }
+        if (jmedium.isSelected())
+        {
+            psiz = "medium";
+        }
+        if (jlarge.isSelected())
+        {
+            psiz = "large";
+        }
+        
+        //check box
+        if (jcheese.isSelected())
+        {
+            chez=true;
+        }
+        
+        //instantiate stuff
+        PizzaOrder orderObject1 = new PizzaOrder ( ptyp, psiz, chez );
+        JOptionPane.showMessageDialog(null, "Pizza Order object created");
+       
+        //show text
+        jTextArea1.append("Order is a " + " " + orderObject1.getSize() + " " + orderObject1.getPizzaName() + " cost $ " + orderObject1.getCost() + '\n');
+    }                                        
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        //exit
+        System.exit(0);        
+    }                                        
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        //clear
+        jTextField4.setText("");
+        jTextArea1.setText("");
+    }        
+    //netbeans stuff
+    //END
