@@ -112,12 +112,11 @@
     $data = htmlspecialchars($data);
     return $data;
 	}
-	  if (empty($errors) === true) {
-      //redirect to display page
-
+	if (empty($errors) === true) {
+    //redirect to display page
     $post_url = 'success.php?';
     /*this code redirects the user to a success.php page so that they do not keep refreshing this page and resubmitting
-    the same information.  It also allows us to redispaly the correctly submitted information.  It is not normally necessary to display 
+    the same information.  It also allows us to redisplay the correctly submitted information.  It is not normally necessary to display 
     this information as it would usually be inserted into a database table!!!
     */
     foreach ($_POST AS $key=>$value){
@@ -127,10 +126,10 @@
     header('Location:' .$post_url);
     exit();
     }
-  // print_r($errors);
+    // print_r($errors);
 }
 	?>
-		<form id="hotbuns" class="hotbunsform"  method="post" action="/vorp/success.php">
+		<form id="hotbuns" class="hotbunsform"  method="post" action="/Vorp/Vorp/PHP/Assignments/success.php">
 			<h2>Hot cross bun order form</h2>	
 		<li id="name" >
 		<label class="description" for="delivery">Name for delivery</label>
