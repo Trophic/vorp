@@ -1,0 +1,191 @@
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+
+
+/**
+ *
+ * @author YOU
+ */
+public class GoldmineTour extends javax.swing.JFrame {
+ArrayList GmTour = new ArrayList();
+    /**
+     * Creates new form GoldmineTour
+     */
+    public GoldmineTour() {
+        initComponents();
+        buttonGroup1.add(jRadioButton1);
+        buttonGroup1.add(jRadioButton2);
+        buttonGroup1.add(jRadioButton3);
+        
+        jInternalFrame1.moveToFront();
+    }
+
+
+ 
+
+    private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {                                             
+        System.exit(0);
+    }                                            
+
+    private void cutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {                                            
+        // TODO add your handling code here:
+        jInternalFrame1.moveToFront();
+    }                                           
+
+    private void copyMenuItemActionPerformed(java.awt.event.ActionEvent evt) {                                             
+        // TODO add your handling code here:
+        jInternalFrame2.moveToFront();
+    }                                            
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        // TODO add your handling code here:
+        jInternalFrame1.moveToBack();
+    }                                        
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        // THIS IS THE CLEAR BUTTON
+        jTourNum.setText ("");
+        jTourDate.setText("");
+        jTourTime.setText("");
+        jTextArea1.setText("");
+        
+        buttonGroup1.clearSelection();
+    }                                        
+
+Here is the bookings button. Take your time with validation and keep notes for tests.
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        // Make Bookings button:
+        String gmNum = "";
+        String gmDesc = "";
+        String gmDate = "";
+        String gmTime = "";
+        
+        double gmPrice = 0.0;
+        
+        //reading the string inputs from fields
+        gmNum = jTourNum.getText();
+        gmDate = jTourDate.getText();
+        gmTime = jTourTime.getText();
+
+        
+        //Introduce the button group
+        if (jRadioButton1.isSelected()){
+            gmDesc= "Mine Experience Tour";}
+        else if (jRadioButton2.isSelected()){
+            gmDesc = "Underground Adventure Tour";}
+        else if (jRadioButton3.isSelected()){
+            gmDesc = "Nine Levels of Darkness";}
+         else {
+            JOptionPane.showMessageDialog(this, "Please Select A Valid Tour");
+            return;
+        }
+        
+        
+        //Object is created
+        TourBooking gmObject1 = new TourBooking(gmNum,gmDesc, gmDate, gmTime, gmPrice);
+        
+        //Load into array for use later
+        GmTour.add(gmObject1);
+        
+                
+        if(gmNum.isEmpty()){
+            JOptionPane.showMessageDialog(this, "Please Enter a Tour Number");
+            return;
+        }
+                if(gmTime.isEmpty()){
+            JOptionPane.showMessageDialog(this, "Please Enter a Tour Time");
+            return;
+        }
+                if(gmDate.isEmpty()){
+            JOptionPane.showMessageDialog(this, "Please Enter a Tour Date");
+            return;
+        }
+        
+        JOptionPane.showMessageDialog(null, "A new booking object was created");
+        
+    }                                        
+
+   
+   
+   Here is the display button. I persoanlly found the bookings number being shown easy, but that was a fluke more so than me bragging.
+   
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        // Displaying all bookings here
+        TourBooking gmObject1;
+         
+       JOptionPane.showMessageDialog(null, "Number of Bookings = " + GmTour.size());
+       
+       for (int x = 0; x < GmTour.size(); x++)
+        {
+            gmObject1 = (TourBooking)GmTour.get(x);
+            String outputData = "******************" + '\n' + "#" + gmObject1.getTbNum() + '\n' + gmObject1.getTbDesc() + '\n' + gmObject1.getTbDate() + '\t'
+            + gmObject1.getTbTime() + '\n' + "$" + gmObject1.getTbCost() + "******************" + '\n';
+            
+            
+            //Display now in area
+            jTextArea1.append(outputData + '\n');
+        }
+
+
+
+
+
+
+
+
+
+HERE IS THE CLASS INFORMATION. PRETTY STRAIGHT FORWARD I FEEL. JUST RENAME THINS YOU WISH AND YOU SHOULD BE FINE.
+
+
+
+
+
+public class TourBooking {
+    String tbNum;
+    String tbDesc;
+    String tbDate;
+    String tbTime;
+    double tbCost;
+
+    public TourBooking(String gmNum, String gmDesc, String gmDate, String gmTime, double gmPrice) {
+        this.tbNum = gmNum;
+        this.tbDesc = gmDesc;
+        this.tbDate = gmDate;
+        this.tbTime = gmTime;
+        this.tbCost = gmPrice;
+    }
+
+    public String getTbNum() {
+        return tbNum;
+    }
+
+    public String getTbDesc() {
+        return tbDesc;
+    }
+
+    public String getTbDate() {
+        return tbDate;
+    }
+
+    public String getTbTime() {
+        return tbTime;
+    }
+
+    public double getTbCost()
+    { 
+        if (tbDesc.equals("Mine Experience Tour"))
+    {   tbCost = 26.00; 
+    }
+        if (tbDesc.equals("Underground Adventure Tour"))
+    {   tbCost = 80.00;
+    }
+        if (tbDesc.equals("Nine Levels of Darkness"))
+    {   tbCost = 160.00;
+    }
+    {
+        return tbCost;
+    }
+    }
+}
+
