@@ -1,59 +1,60 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>Hot cross bun order page</title>
-</head>
-<body>
-	<h1><a>Hot cross bun order</a></h1>
-	<?php
+<?php
 		//define errors array
-    		$errors = array();
+		    $errors = array();
 		//define variables
-		$name = $email = $phone = $buns = $busadd = $address = $state = $pcode = $country = $date = $newsletter = "";
-    		//on submit validation begins
+			$name = $email = $phone = $buns = $busadd = $address = $state = $pcode = $country = $date = $newsletter = "";
+    	//on submit validation begins
     		if(isset($_POST['submit'])){
+			
 		//grab post variables
-		if ($_SERVER["REQUEST_METHOD"] == "POST") {
-	
+			if ($_SERVER["REQUEST_METHOD"] == "POST") {
+	   
+		//checks for HTML characters to prevent XSS attacks (see http://en.wikipedia.org/wiki/Cross-site_scripting )
+    		function test_input($data) {
+    		$data = trim($data);
+    		$data = stripslashes($data);
+    		$data = htmlspecialchars($data);
+    		return $data;
+			}
 		//name
-		//check for empty
-		if (empty($_POST['dfirst'.' '.'dlast'])){
-		$errors[]="please enter your full name";
-		} else {
-		//test for html characters
-		$name =test_input($_POST['dfirst'.' '.'dlast']);
-		}
+			//check for empty
+			if (empty($_POST['dfirst'])){
+			$errors[]="please enter your full name";
+			} else {
+			//test for html characters
+			$name =test_input($_POST['dfirst']);
+			}
 	
 		//email
-		if (empty($_POST["email"])) {
+			if (empty($_POST["email"])) {
     		$errors[] = "Email is required";
     		} else {
     		$email = test_input($_POST["email"]);
-   		// check if e-mail address is valid or not
+			// check if e-mail address is valid or not
     		if (!preg_match("/([\w\-]+\@[\w\-]+\.[\w\-]+)/",$email)) {
     		$errors[]= "Invalid email format";
     		} }
     	
-    		//phone
-		if (empty($_POST["phone"])) {
-		$errors[]= "phone is required";
-		} else {
-		$phone = test_input($_POST["phone"]);
-   		// check if phone is number
-   		if (is_numeric($phone)===false){
-    		$errors[]= "Invalid phone number";
-    		//strips anything but numbers
-		$phone = preg_replace('/\D/', '', $phone);
-   		//checks for 10 digits and first digit is 0
-		$errors[] = "Invalid phone number";
-		} }
+    	//phone
+			if (empty($_POST["phone"])) {
+			$errors[]= "phone is required";
+			} else {
+			$phone = test_input($_POST["phone"]);
+			//strips anything but numbers
+			$phone = preg_replace('/\D/', '', $phone);
+			// check if phone is number
+			if (is_numeric($phone)===false){
+			$errors[]= "Invalid phone number"; }
+			//checks for 10 digits and first digit is 0		
+			if (! preg_match('/^0\d{9}$/', $phone)){		
+			$errors[]= "Invalid phone number";
+			} }
 	
 		//number of buns
-	 	if (empty($_POST["buns"])) {
-		$errors[]= "number of buns is required";
-		} else {
-		$buns = test_input($_POST["buns"]);
+			if (empty($_POST["buns"])) {
+			$errors[]= "number of buns is required";
+			} else {
+			$buns = test_input($_POST["buns"]);
     		//strips anything but numbers
     		$buns = preg_replace('/\D/', '', $buns);
     		// check if buns is a number
@@ -63,85 +64,90 @@
     	
     		//Address
     		//couldn't find any simple php validation for address but if t was super necessary I would use the whole address including postcode, state and country and then plug that into some js and send it to google maps to validate
-    		if (empty($_POST['staddress'.' '.'staddress2'.' '.'caddress'])) {
+    		if (empty($_POST['staddress'])) {
     		$errors[]= "address is required";
     		} else {
-		$address=test_input($_POST['staddress'.' '.'staddress2'.' '.'caddress']);
-    		} }
+			$address=test_input($_POST['staddress']);
+    		} 
     	
-    		//state
+    	//state
     		if (empty($_POST['raddress'])) {
     		$errors[]= "state is required";
     		} else {
-		$state=test_input($_POST['raddress']);
-    		} }
+			$state=test_input($_POST['raddress']);
+    		}
     	
 		//post Code
-		if (empty($_POST['pcode'])) {
-		$errors[]= "postcode is required";
+			if (empty($_POST['pcode'])) {
+			$errors[]= "postcode is required";
     		} else {
-		$pcode=test_input($_POST['pcode']);
-		// check if postcode is number
-   		if (is_numeric($pcode)===false){
+			$pcode=test_input($_POST['pcode']);
+			// check if postcode is number
+			if (is_numeric($pcode)===false){
     		$errors[]= "Invalid postcode, try a number";
     		//strips anything but numbers
-   		$pcode = preg_replace('/\D/', '', $pcode);
-   		//checks for 4 digits 
-   		//(http://stackoverflow.com/questions/1204844/php-regular-expression-to-check-whether-a-number-consists-of-5-digits)
+			$pcode = preg_replace('/\D/', '', $pcode);
+			//checks for 4 digits 
+			//(http://stackoverflow.com/questions/1204844/php-regular-expression-to-check-whether-a-number-consists-of-5-digits)
     		if (! preg_match('/\d{4}$/', $pcode)) {
     		$errors[] = "a postcode must contain 4 numbers";
-    		} }
+    		} } }
     	
 		//country
-		if (empty($_POST['country'])) {
+			if (empty($_POST['country'])) {
     		$errors[]= "country is required";
     		} else {
-		$country=test_input($_POST['country']);
-    		} }
+			$country=test_input($_POST['country']);
+    		}
     	
-    		//date
-    		if (empty($_POST['dateday'.' '.'datemonth'.' '.'dateyear'])) {
+    	//date
+    		if (empty($_POST['dateday'])) {
 	    	$errors[]= "date is required";
 	    	} else {
+			if (empty($_POST['datemonth'])) {
+			$errors[]= "date is required";
+			} else {
+			if (empty($_POST['dateyear'])) {
+			$errors[]= "date is required";
+			} } }
 	    	//check date
-	    	if (checkdate('datemonth','dateday','dateyear')==false){
+	    	//if (checkdate('datemonth','dateday','dateyear')===false){
+			if ('dateyear'>2016){
 	        $errors[]="please enter valid date";
-	        } else {
-        	$date=test_input($_POST['dateday'.' '.'datemonth'.' '.'dateyear']);
-        	}
-        
-		//checks for HTML characters to prevent XSS attacks (see http://en.wikipedia.org/wiki/Cross-site_scripting )
-    		function test_input($data) {
-    		$data = trim($data);
-    		$data = stripslashes($data);
-    		$data = htmlspecialchars($data);
-    		return $data;
-		}
+	        }
+     
 	
-		if (empty($errors) === true) {
-    		//redirect to display page
+			if (empty($errors) === true) {
+    	//redirect to display page
     		$post_url = 'success.php?';
-    		/*this code redirects the user to a success.php page so that they do not keep refreshing this page and resubmitting
-	 	the same information.  It also allows us to redisplay the correctly submitted information.  It is not normally necessary to display 
-	 	this information as it would usually be inserted into a database table!!!
-	  	*/
+			/* this code redirects the user to a success.php page so that they do not keep refreshing this page and resubmitting
+			the same information.  It also allows us to redisplay the correctly submitted information.  It is not normally necessary to display 
+			this information as it would usually be inserted into a database table!!! */
     		foreach ($_POST AS $key=>$value){
-	  	$post_url .= $key.'='.$value.'&';
+			$post_url .= $key.'='.$value.'&';
     		}
     		$post_url = rtrim($post_url, '&');
     		header('Location:' .$post_url);
-	 	exit();
-	  	}
-    		// print_r($errors);
-		}
-	?>
-<form id="hotbuns" class="hotbunsform"  method="post" action="/Vorp/Vorp/PHP/Assignments/success.php">
+			exit();
+			}
+    		 print_r($errors);
+			}
+			}
+?>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Hot cross bun order page</title>
+</head>
+<body>
+	<h1><a>Hot cross bun order</a></h1>	
+<form id="hotbuns" class="hotbunsform"  method="post" action="/Vorp/Vorp/PHP/Assignments/rohan.php">
 <h2>Hot cross bun order form</h2>	
 <li id="name" >
 	<label class="description" for="delivery">Name for delivery</label>
 	<div>
-		<span><input id="dfirst" name= "dfirst" class="element text" maxlength="255" size="8" value="First"/></span>
-		<span><input id="dlast" name= "dlast" class="element text" maxlength="255" size="14" value="Last"/></span> 
+		<input id="dfirst" name= "dfirst" class="element text" size="8" value="Name"/>
 	</div>
 </li>
 <li id="email" >
@@ -162,7 +168,7 @@
 		<input id="buns" name="buns" class="element text small" type="text" maxlength="255" value=""/> 
 	</div> 
 </li>
-<li id= "busadd" >
+<li id="busadd" >
 	<label class="description" for="busadd"> </label>
 	<span><input id="busadd" name="busadd" class="element checkbox" type="checkbox" value="1" />
 	<label class="choice" for="busadd">Business address</label></span> 
@@ -170,11 +176,11 @@
 <li id="address" >
 	<label class="description" for="address">Address </label>
 	<div>
-		<input id="staddress" name="staddress" class="element text large" value="" type="text">
+		<input id="staddress" name="staddress" class="element text large" value="1 streetname street" type="text">
 		<label for="staddress">Street Address</label>
 	</div>
 	<div>
-		<input id="staddress2" name="staddress2" class="element text large" value="" type="text">
+		<input id="staddress2" name="staddress2" class="element text large" value="apartment 1" type="text">
 		<label for="staddress2">Address Line 2</label>
 	</div>
 	<div class="left">
