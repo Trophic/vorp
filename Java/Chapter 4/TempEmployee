@@ -1,0 +1,31 @@
+package Chapter4;
+
+public class TempEmployee extends Employee {
+   //private variables
+    private double hourlyrate;
+    private double hrsWorked;
+    double pay;
+    
+    //constructor
+
+    public TempEmployee(double hourlyrate, double hrsWorked, String name, String empNum, String position) {
+        super(name, empNum, position);
+        this.hourlyrate = hourlyrate;
+        this.hrsWorked = hrsWorked;
+    }
+    
+    //methods
+
+    public double getHourlyrate() {
+        return hourlyrate;
+    }
+
+    public double getHrsWorked() {
+        return hrsWorked;
+    }
+    
+    public double calcpay() {
+        pay = hourlyrate*hrsWorked;
+        return pay;
+    }
+}
