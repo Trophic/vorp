@@ -1,0 +1,113 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package revision;
+
+/**
+ *
+ * @author meta
+ */
+public class WebPage {
+    
+    /**
+     * INSTEAD OF SETTING:
+     * STRING ATTRIBUTE/VARIABLES = "" OR 
+     * DOUBLE ATTRIBUTE/VARIABLES = 0
+     * CREATE THE ATTRIBUTE/VARIABLES BELOW (BASED ON UML DIAGRAM)
+     */
+    
+    String webPageNumber;
+    String webPageDescription;
+    String webPageLanguage;
+    String webPageDate;
+    String webPageDuration;
+    double webPageCost;
+
+    /**
+     * USING [RIGHT MOUSE CLICK] + [Insert Code...] :
+     * SELECT Constructor...
+     * SELECT Fields to be INITIALIZED by CONSTRUCTOR
+     * SELECT THE FIELDS YOU NEED
+     * CONSTRUCTOR IS SET UP
+     */
+    
+    public WebPage(String webPageNumber, String webPageDescription, String webPageLanguage, String webPageDate, String webPageDuration, double webPageCost) {
+        this.webPageNumber = webPageNumber;
+        this.webPageDescription = webPageDescription;
+        this.webPageLanguage = webPageLanguage;
+        this.webPageDate = webPageDate;
+        this.webPageDuration = webPageDuration;
+        this.webPageCost = webPageCost;
+    }
+
+    /**
+     * USING [RIGHT MOUSE CLICK] + [Insert Code...] :
+     * SELECT Constructor...
+     * SELECT Fields to be GENERATE GETTERS FOR...
+     * SELECT THE FIELDS YOU NEED
+     * GET METHODS ARE SET UP
+     * NOTE:
+     * public double getWebPageCost() {
+        return webPageCost;
+       }
+     * REQUIRES IF STATEMENTS TO DETERMINE WHICH RADIO BUTTON HAS BEEN SELECTED
+     * & THEREFORE ITS VALUE = "WebSiteDescription" 
+     * SO THE WEBSITE COST = "500, 1000, 1500 or 3000" CAN BE DETERMINED & USED
+     */
+    
+    public String getWebPageNumber() {
+        return webPageNumber;
+    }
+
+    public String getWebPageDescription() {
+        return webPageDescription;
+    }
+    
+    public String getWebPageLanguage() {
+        return webPageLanguage;
+    }
+
+    public String getWebPageDate() {
+        return webPageDate;
+    }
+
+    public String getWebPageDuration() {
+        return webPageDuration;
+    }
+
+    public double getWebPageCost() {
+        
+        if (webPageDescription.equals("Basic Personal Website")) {
+            webPageCost = 500.00;
+        }
+        if (webPageDescription.equals("Multimedia Personal Website")) {
+            webPageCost = 1000.00;
+        }
+        if (webPageDescription.equals("Small Business Website")) {
+            webPageCost = 1500.00;
+        }
+        if (webPageDescription.equals("Large Business Website")) {
+            webPageCost = 3000.00;
+        }
+        return webPageCost;
+    }
+    
+
+    /**
+     * FOLLOW THE UML DIAGRAM :
+     * CLASS TITLE = NAME OF CLASS FILE (in the HEADING)
+     * CLASS ATTRIBUTES = ATTRIBUTES/VARIABLES SHOWING INITIAL VALUES
+     * CLASS OPERATIONS = 
+     * GET METHODS SHOWING THEIR PARAMETERS
+     * SET METHODS SHOWING THEIR PARAMETERS
+     *** NEED TO UNDERSTAND HOW THE SET METHODS WORK/HELP/WHY USE THEM***
+     * CLASS DIAGRAM INDICATES THE VISIBILITY OF THE ATTRIBUTE/OPERATION
+     *
+     */
+    
+    
+    
+    
+}
