@@ -1,0 +1,132 @@
+package Chapter4;
+
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+
+public class EmployGUI extends javax.swing.JFrame {
+
+//create arraylist
+    // all employees
+    ArrayList empList = new ArrayList ();
+    // just temp employees
+    ArrayList tempList = new ArrayList ();
+    
+    public EmployGUI() {
+        initComponents();
+    }
+  //netbeans shizzle                  
+
+    private void clear3ActionPerformed(java.awt.event.ActionEvent evt) {                                       
+        //clear
+         datadisplay.setText("");
+    }                                      
+
+    private void quit3ActionPerformed(java.awt.event.ActionEvent evt) {                                      
+        // quit
+        System.exit(0);
+    }                                     
+
+    private void CreateEmployeeActionPerformed(java.awt.event.ActionEvent evt) {                                               
+        // declare variables
+        String name="";
+        String empNum="";
+        String position="";
+        
+        // recieve input
+        name= empname.getText();
+        empNum= empnumber.getText();
+        position= empposition.getText();
+        
+        //create new employee object
+        Employee employeeObject = new Employee (name, empNum, position);
+        JOptionPane.showMessageDialog(null, "A new employee has been created");
+        
+        //add employee into array
+        empList.add(employeeObject);
+    }                                              
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        // declare variables
+        String name="";
+        String empNum="";
+        String position="";
+        
+        double hrsWorked=0.0;
+        double hourlyrate=0.0;
+        
+        //recieve text input
+        name= tempname.getText();
+        empNum= tempnumber.getText();
+        position= tempposition.getText();
+        
+        //recieve doubles and convert to strings
+        hrsWorked= Double.parseDouble(temphours.getText());
+        hourlyrate= Double.parseDouble(temprate.getText());
+        
+        //create new employee object
+        TempEmployee tempObject = new TempEmployee(hrsWorked, hourlyrate, name, empNum, position);
+        
+        //add employee into array
+        tempList.add(tempObject);
+        empList.add(tempObject);
+        
+        //calculate pay
+        tempObject.calcpay();
+        
+        //display data
+        jTabbedPane1.setSelectedIndex(2);
+        String outputData = tempObject.getName() + '\t' 
+                + tempObject.getEmpNum() + '\t' 
+                + tempObject.getPosition() + '\t' + tempObject.calcpay() ;
+        datadisplay.append(outputData + '\n');
+    }                                        
+
+    private void clear1ActionPerformed(java.awt.event.ActionEvent evt) {                                       
+        // clear text fields
+        empname.setText("");
+        empnumber.setText("");
+        empposition.setText("");
+    }                                      
+
+    private void clear2ActionPerformed(java.awt.event.ActionEvent evt) {                                       
+        // clear text fields
+        tempname.setText("");
+        tempnumber.setText("");
+        tempposition.setText("");
+        temphours.setText("");
+        temprate.setText("");                               
+    }                                      
+
+    private void showallempActionPerformed(java.awt.event.ActionEvent evt) {                                           
+        //display all employees
+        //load object
+        Employee employeeObject;
+        //point to next object in array and place it in the carObject variable
+        for (int x = 0; x< empList.size(); x++)
+        {
+            employeeObject = (Employee)empList.get(x);
+        //display objects
+        String outputData = employeeObject.getName() + '\t' 
+                + employeeObject.getEmpNum() + '\t' 
+                + employeeObject.getPosition() ;
+        datadisplay.append(outputData + '\n');
+        }
+    }                                          
+
+    private void showalltempActionPerformed(java.awt.event.ActionEvent evt) {                                            
+        // show all temp employees
+        //load object
+        TempEmployee tempObject;
+        //point to next object in array and place it in the carObject variable
+        for (int x = 0; x< tempList.size(); x++)
+        {
+            tempObject = (TempEmployee)tempList.get(x);
+        //display objects
+         String outputData = tempObject.getName() + '\t' 
+                + tempObject.getEmpNum() + '\t' 
+                + tempObject.getPosition() + '\t' + tempObject.calcpay();
+        datadisplay.append(outputData + '\n');
+        }
+    }                                           
+//netbeans jazz               
+}
