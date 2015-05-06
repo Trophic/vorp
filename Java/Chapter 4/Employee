@@ -1,0 +1,31 @@
+package Chapter4;
+
+public class Employee {
+    //declare private variables
+    private String name;
+    private String empNum;
+    private String position;
+    
+    //constructor
+
+    public Employee(String name, String empNum, String position) {
+        this.name = name;
+        this.empNum = empNum;
+        this.position = position;
+    }
+    
+    //get methods
+
+    public String getName() {
+        return name;
+    }
+
+    public String getEmpNum() {
+        return empNum;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+    
+}
