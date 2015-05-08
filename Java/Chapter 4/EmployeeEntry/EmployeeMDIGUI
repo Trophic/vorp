@@ -1,0 +1,197 @@
+package Chapter4;
+
+import java.util.ArrayList;
+
+public class EmployeeMDIGUI extends javax.swing.JFrame {
+
+    //create arraylists
+    ArrayList empList = new ArrayList ();
+    ArrayList tempList = new ArrayList ();
+    ArrayList permList = new ArrayList ();
+    
+    public EmployeeMDIGUI() {
+        initComponents();
+    }
+
+    //netbeans jazz                      
+
+    private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {                                             
+        //exit
+        System.exit(0);
+    }                                            
+
+    private void cutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {                                            
+        //shows input
+        Datainput.moveToFront();
+    }                                           
+
+    private void copyMenuItemActionPerformed(java.awt.event.ActionEvent evt) {                                             
+        //shows input
+        Dataoutput.moveToFront();
+    }                                            
+
+    private void newemployeeActionPerformed(java.awt.event.ActionEvent evt) {                                            
+        // declare variables
+        String name="";
+        String empNum="";
+        String position="";
+
+        double hrsWorked=0.0;
+        double hourlyrate=0.0;
+
+        //recieve text input
+        name= empname.getText();
+        empNum= empnumber.getText();
+        position= empposition.getText();
+
+        //recieve doubles and convert to strings
+        hrsWorked= Double.parseDouble(temphours.getText());
+        hourlyrate= Double.parseDouble(temprate.getText());
+
+        //create new employee object
+        TempEmployee tempObject = new TempEmployee(hrsWorked, hourlyrate, name, empNum, position);
+
+        //add employee into array
+        tempList.add(tempObject);
+        empList.add(tempObject);
+
+        //calculate pay
+        tempObject.calcpay();
+
+        //display data
+        Dataoutput.moveToFront();
+        String outputData = tempObject.getName() + '\t'
+        + tempObject.getEmpNum() + '\t'
+        + tempObject.getPosition() + '\t' + tempObject.calcpay() ;
+        datadisplay.append(outputData + '\n');
+        
+        // clear text fields
+        empname.setText("");
+        empnumber.setText("");
+        empposition.setText("");
+        temphours.setText("");
+        temprate.setText("");
+    }                                           
+
+    private void clear1ActionPerformed(java.awt.event.ActionEvent evt) {                                       
+        // clear text fields
+        empname.setText("");
+        empnumber.setText("");
+        empposition.setText("");
+        temphours.setText("");
+        temprate.setText("");
+    }                                      
+
+    private void newtempemployeeActionPerformed(java.awt.event.ActionEvent evt) {                                                
+        //declare variables
+        String name="";
+        String empNum="";
+        String position="";
+        
+        Double salary=0.0;
+        
+        // recieve input
+        name= empname.getText();
+        empNum= empnumber.getText();
+        position= empposition.getText();
+        
+        //recieve double and convert to string
+        salary= Double.parseDouble(permsalary.getText());
+        
+        //create new employee object
+        PermanentEmployee permObject = new PermanentEmployee(salary, name, empNum, position);
+        
+        //add employee into array
+        permList.add(permObject);
+        empList.add(permObject);
+        
+         //calcbonus
+         permObject.calcbonus();
+         
+         //display data
+         Dataoutput.moveToFront();
+        String outputData = permObject.getName() + '\t'
+        + permObject.getEmpNum() + '\t'
+        + permObject.getPosition() + '\t' + permObject.getSalary() + '\t'+ permObject.calcbonus() ;
+        datadisplay.append(outputData + '\n');
+        
+        //clear entries
+        empname.setText("");
+        empnumber.setText("");
+        empposition.setText("");
+        permsalary.setText("");
+         
+    }                                               
+
+    private void clear2ActionPerformed(java.awt.event.ActionEvent evt) {                                       
+        //clear entries
+        empname.setText("");
+        empnumber.setText("");
+        empposition.setText("");
+        permsalary.setText("");
+    }                                      
+
+    private void cleardisplayActionPerformed(java.awt.event.ActionEvent evt) {                                             
+        //clear
+        datadisplay.setText("");
+    }                                            
+
+    private void displayallActionPerformed(java.awt.event.ActionEvent evt) {                                           
+        //display all employees
+        //load object
+        Employee employeeObject;
+        //point to next object in array and place it in the carObject variable
+        for (int x = 0; x< empList.size(); x++)
+        {
+            employeeObject = (Employee)empList.get(x);
+            //display objects
+            String outputData = employeeObject.getName() + '\t'
+            + employeeObject.getEmpNum() + '\t'
+            + employeeObject.getPosition() ;
+            datadisplay.append(outputData + '\n');
+        }
+    }                                          
+
+    private void displayalltempActionPerformed(java.awt.event.ActionEvent evt) {                                               
+        // show all temp employees
+        //load object
+        TempEmployee tempObject;
+        //point to next object in array and place it in the carObject variable
+        for (int x = 0; x< tempList.size(); x++)
+        {
+            tempObject = (TempEmployee)tempList.get(x);
+            //display objects
+            String outputData = tempObject.getName() + '\t'
+            + tempObject.getEmpNum() + '\t'
+            + tempObject.getPosition() + '\t' + tempObject.calcpay();
+            datadisplay.append(outputData + '\n');
+        }
+    }                                              
+
+    private void displaypermActionPerformed(java.awt.event.ActionEvent evt) {                                            
+        //show all perm employees
+        //load object
+        PermanentEmployee permObject;
+        //point to next object in array and place it in the carObject variable
+        for (int x = 0; x< permList.size(); x++)
+        {
+            permObject = (PermanentEmployee)permList.get(x);
+            //display objects
+            String outputData = permObject.getName() + '\t'
+            + permObject.getEmpNum() + '\t'
+            + permObject.getPosition() + '\t' + permObject.getSalary() + '\t' + permObject.calcbonus();
+            datadisplay.append(outputData + '\n');
+        }
+    }                                           
+
+    private void WelcomeentryActionPerformed(java.awt.event.ActionEvent evt) {                                             
+        //moves welcome screen to back
+        Welcome.moveToBack();
+    }                                            
+
+    private void enternewempActionPerformed(java.awt.event.ActionEvent evt) {                                            
+        //return to input
+        Datainput.moveToFront();
+    }                                           
+    //netbeans jazz
+}
