@@ -1,0 +1,26 @@
+package Chapter4;
+
+
+public class PermanentEmployee extends Employee{
+    //declare variables
+    private double salary;
+    private double bonus;
+    
+    //constructor
+
+    public PermanentEmployee(double salary, String name, String empNum, String position) {
+        super(name, empNum, position);
+        this.salary = salary;
+    }
+    
+    //methods
+
+    public double getSalary() {
+        return salary;
+    }
+    
+    public double calcbonus() {
+        bonus = (salary *0.1) + 500; 
+        return bonus;
+    }
+}
