@@ -1,3 +1,27 @@
+/* Hi guys
+So we have the following buttons and fields etc for the gui.
+First off we have 2 jInternalFrames. lay them up with the proper move forward and back functions. jInternalFrame1 is just the WELCOME page with a button to move the frame back.
+The second frame has the following design.
+
+1. RadioButton group with 3 radio buttons.
+2. 3 textfields
+3. 3 buttons
+
+What we want to do is make the submit button that accepts the information that has been input, to NOT show up immediately on the textarea.
+It will go into the array to be shown for later. 
+The second button is the display button which is showing all array information. So this will be all previous information you have submitted.
+Finally we have a clear button that is just clearing the textarea, not the array itself.
+
+The button group is just your typical 3 radio buttons. but they have their own description which is what will determine the price in the class.
+button one = "Mine Experience Tour"
+button two = "Underground Adventure Tour"
+button three = "Nine Levels of Darkness"
+This is just changing the text of the buttons. But when a button is picked then the description is the determining factor for the price.
+
+So on the class file,  gmDescr = each one, but they have different prices.
+
+*/
+
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
