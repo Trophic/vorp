@@ -1,0 +1,292 @@
+package AssCourier;
+
+import javax.swing.JOptionPane;
+//javasql
+import java.sql.*; 
+
+public class AssCourierGUI extends javax.swing.JFrame {
+ 
+    public AssCourierGUI() {
+        initComponents();
+    }
+    //javamysql method
+    public boolean loadDriver(){
+    try {
+    Class.forName(java.sql.Driver);
+    return true;
+    } catch (ClassNotFoundException e){
+    // display error message
+    JOptionPane.showMessageDialog(null, "Database Loaded");
+    return false;
+}
+}
+
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
+    private void initComponents() {
+
+        desktopPane = new javax.swing.JDesktopPane();
+        Welcome = new javax.swing.JInternalFrame();
+        Welcomepic = new javax.swing.JLabel();
+        WelcomeButton = new javax.swing.JButton();
+        Dinput = new javax.swing.JInternalFrame();
+        Doutput = new javax.swing.JInternalFrame();
+        menuBar = new javax.swing.JMenuBar();
+        fileMenu = new javax.swing.JMenu();
+        exitMenuItem = new javax.swing.JMenuItem();
+        Tools = new javax.swing.JMenu();
+        Welcometofront = new javax.swing.JMenuItem();
+        Dinputmenu = new javax.swing.JMenuItem();
+        Doutputmenu = new javax.swing.JMenuItem();
+        editMenu = new javax.swing.JMenu();
+        copyMenuItem = new javax.swing.JMenuItem();
+        pasteMenuItem = new javax.swing.JMenuItem();
+        deleteMenuItem = new javax.swing.JMenuItem();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        Welcome.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        Welcome.setClosable(true);
+        Welcome.setTitle("Welcome to the welcome screen");
+        Welcome.setToolTipText("Welcome, Welcome, Welcome, Welcome, Welcome");
+        Welcome.setVisible(true);
+
+        Welcomepic.setIcon(new javax.swing.ImageIcon(getClass().getResource("/AssCourier/welcourass.png"))); // NOI18N
+
+        WelcomeButton.setText("<html> <body> <h4>Welcome!</h4> Click here to hide this large annoying, yet welcoming, screen </body> </html>");
+        WelcomeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                WelcomeButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout WelcomeLayout = new javax.swing.GroupLayout(Welcome.getContentPane());
+        Welcome.getContentPane().setLayout(WelcomeLayout);
+        WelcomeLayout.setHorizontalGroup(
+            WelcomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(WelcomeLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(Welcomepic)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(WelcomeButton, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE))
+        );
+        WelcomeLayout.setVerticalGroup(
+            WelcomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(WelcomeLayout.createSequentialGroup()
+                .addGroup(WelcomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(Welcomepic, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(WelcomeButton))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        desktopPane.add(Welcome);
+        Welcome.setBounds(0, 0, 400, 280);
+
+        Dinput.setClosable(true);
+        Dinput.setTitle("Data Input");
+        Dinput.setToolTipText("This is where you can input data");
+        Dinput.setVisible(true);
+
+        javax.swing.GroupLayout DinputLayout = new javax.swing.GroupLayout(Dinput.getContentPane());
+        Dinput.getContentPane().setLayout(DinputLayout);
+        DinputLayout.setHorizontalGroup(
+            DinputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        DinputLayout.setVerticalGroup(
+            DinputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        desktopPane.add(Dinput);
+        Dinput.setBounds(0, 0, 400, 280);
+
+        Doutput.setClosable(true);
+        Doutput.setTitle("Data Display");
+        Doutput.setToolTipText("This is where you can preview the data before you output it!");
+        Doutput.setVisible(true);
+
+        javax.swing.GroupLayout DoutputLayout = new javax.swing.GroupLayout(Doutput.getContentPane());
+        Doutput.getContentPane().setLayout(DoutputLayout);
+        DoutputLayout.setHorizontalGroup(
+            DoutputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        DoutputLayout.setVerticalGroup(
+            DoutputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        desktopPane.add(Doutput);
+        Doutput.setBounds(2, 3, 400, 270);
+
+        menuBar.setToolTipText("The menu!");
+
+        fileMenu.setMnemonic('f');
+        fileMenu.setText("File");
+
+        exitMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_ESCAPE, 0));
+        exitMenuItem.setMnemonic('x');
+        exitMenuItem.setText("Exit");
+        exitMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitMenuItemActionPerformed(evt);
+            }
+        });
+        fileMenu.add(exitMenuItem);
+
+        menuBar.add(fileMenu);
+
+        Tools.setText("Tools");
+
+        Welcometofront.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_W, java.awt.event.InputEvent.CTRL_MASK));
+        Welcometofront.setText("Welcome Screen");
+        Welcometofront.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                WelcometofrontActionPerformed(evt);
+            }
+        });
+        Tools.add(Welcometofront);
+
+        Dinputmenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.CTRL_MASK));
+        Dinputmenu.setText("Data Input");
+        Dinputmenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DinputmenuActionPerformed(evt);
+            }
+        });
+        Tools.add(Dinputmenu);
+
+        Doutputmenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
+        Doutputmenu.setText("Data Display");
+        Doutputmenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DoutputmenuActionPerformed(evt);
+            }
+        });
+        Tools.add(Doutputmenu);
+
+        menuBar.add(Tools);
+
+        editMenu.setMnemonic('e');
+        editMenu.setText("Edit");
+
+        copyMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_MASK));
+        copyMenuItem.setMnemonic('y');
+        copyMenuItem.setText("Copy");
+        editMenu.add(copyMenuItem);
+
+        pasteMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.CTRL_MASK));
+        pasteMenuItem.setMnemonic('p');
+        pasteMenuItem.setText("Paste");
+        editMenu.add(pasteMenuItem);
+
+        deleteMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_DELETE, 0));
+        deleteMenuItem.setMnemonic('d');
+        deleteMenuItem.setText("Delete");
+        editMenu.add(deleteMenuItem);
+
+        menuBar.add(editMenu);
+
+        setJMenuBar(menuBar);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 399, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)
+        );
+
+        pack();
+    }// </editor-fold>                        
+
+    private void WelcomeButtonActionPerformed(java.awt.event.ActionEvent evt) {                                              
+        //moves welcome screen to back and provides encouragent
+        Welcome.moveToBack();
+        JOptionPane.showMessageDialog(null, "You Closed the welcome screen. Go you!");
+    }                                             
+
+    private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {                                             
+        //provides encouragement and then exits
+        JOptionPane.showMessageDialog(null, "You are exiting the program. Have a good time!");
+        System.exit(0);
+    }                                            
+
+    private void WelcometofrontActionPerformed(java.awt.event.ActionEvent evt) {                                               
+        //moves welcome screen to front and provides encouragement
+        Welcome.moveToFront();
+        JOptionPane.showMessageDialog(null, "You Opened the welcome screen. Your are the best!");
+    }                                              
+
+    private void DoutputmenuActionPerformed(java.awt.event.ActionEvent evt) {                                            
+        //moves data output to front and provides encouragement
+        Doutput.moveToFront();
+        JOptionPane.showMessageDialog(null, "You Opened the Data Output screen. Go input data you!");
+    }                                           
+
+    private void DinputmenuActionPerformed(java.awt.event.ActionEvent evt) {                                           
+        //moves data input to front and provides encouragement
+        Dinput.moveToFront();
+        JOptionPane.showMessageDialog(null, "You Opened the Data Input screen. Try your hardest!!");
+    }                                          
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(AssCourierGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(AssCourierGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(AssCourierGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(AssCourierGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new AssCourierGUI().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify                     
+    private javax.swing.JInternalFrame Dinput;
+    private javax.swing.JMenuItem Dinputmenu;
+    private javax.swing.JInternalFrame Doutput;
+    private javax.swing.JMenuItem Doutputmenu;
+    private javax.swing.JMenu Tools;
+    private javax.swing.JInternalFrame Welcome;
+    private javax.swing.JButton WelcomeButton;
+    private javax.swing.JLabel Welcomepic;
+    private javax.swing.JMenuItem Welcometofront;
+    private javax.swing.JMenuItem copyMenuItem;
+    private javax.swing.JMenuItem deleteMenuItem;
+    private javax.swing.JDesktopPane desktopPane;
+    private javax.swing.JMenu editMenu;
+    private javax.swing.JMenuItem exitMenuItem;
+    private javax.swing.JMenu fileMenu;
+    private javax.swing.JMenuBar menuBar;
+    private javax.swing.JMenuItem pasteMenuItem;
+    // End of variables declaration                   
+
+}
