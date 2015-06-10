@@ -1,4 +1,5 @@
 Assignment Story
+
 // A courier company needs to keep record of the deliveries they make.
 // List of attributes they need to record includes; Destination address, parcel weight, price per kilo, delivery
 // method (registered, express, normal), if fragile or not. Add a job ID as the unique identifier in the database
@@ -11,7 +12,7 @@ Assignment Story
 // registered, express, and normal postage items to 3 separate text files. Use appropriate formatting to make
 // the list presentable. 
 
-   Variables
+  Variables
    - address [string]
    - weight [double]
    - price [double]
@@ -20,7 +21,7 @@ Assignment Story
    - job ID [string]
    - total cost [double]
    
-   Deliverables
+  Deliverables
    - 3 seperate text files for each delivery method
    - single database table
    - MDI application
