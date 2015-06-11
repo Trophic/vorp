@@ -26,3 +26,6 @@ Assignment Story
    - single database table
    - MDI application
    
+References
+http://www.homeandlearn.co.uk/java/connect_to_a_database_using_java_code.html
+http://www.herongyang.com/JDBC/Derby-Server-INERT-INTO.html
