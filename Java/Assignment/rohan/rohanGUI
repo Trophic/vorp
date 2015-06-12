@@ -1,0 +1,394 @@
+package AssCourier;
+
+//imports
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import javax.swing.JOptionPane;
+import java.sql.*;
+import com.mysql.jdbc.Connection;
+import com.mysql.jdbc.Statement;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+
+public class AssCourierGUI extends javax.swing.JFrame {
+    Connection conn = null;
+    String jobID="";
+   //test connection to mysql 
+    public AssCourierGUI() {
+        initComponents();
+        try {
+        Class.forName("org.gjt.mm.mysql.Driver");
+        }
+        catch (Exception e){
+      JOptionPane.showMessageDialog(null,"Driver error " + e);
+        }
+        try {
+        conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/asscourier","root","");
+        }
+        catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,"Connection error " + e);
+        }
+    }
+    
+   @@@@@@@@@@@@ NETBEANS SHIZ @@@@@@@@@@@@@@@@@@
+   
+    private void WelcomeButtonActionPerformed(java.awt.event.ActionEvent evt) {                                              
+        //moves welcome screen to back and provides encouragent
+        Welcome.moveToBack();
+        JOptionPane.showMessageDialog(null, "You Closed the welcome screen. Go you!");
+    }                                             
+
+    private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {                                             
+        //provides encouragement and then exits
+        JOptionPane.showMessageDialog(null, "You are exiting the program. Have a good time!");
+        System.exit(0);
+    }                                            
+
+    private void WelcometofrontActionPerformed(java.awt.event.ActionEvent evt) {                                               
+        //moves welcome screen to front and provides encouragement
+        Welcome.moveToFront();
+        JOptionPane.showMessageDialog(null, "You Opened the welcome screen. Your are the best!");
+    }                                              
+
+    private void DoutputmenuActionPerformed(java.awt.event.ActionEvent evt) {                                            
+        //moves data output to front and provides encouragement
+        Doutput.moveToFront();
+        JOptionPane.showMessageDialog(null, "You Opened the Data Output screen. Go input data you!");
+    }                                           
+
+    private void DinputmenuActionPerformed(java.awt.event.ActionEvent evt) {                                           
+        //moves data input to front and provides encouragement
+        Dinput.moveToFront();
+        JOptionPane.showMessageDialog(null, "You Opened the Data Input screen. Try your hardest!!");
+    }                                          
+
+    private void DatabasemenuActionPerformed(java.awt.event.ActionEvent evt) {                                             
+        //moves database deletion to front and provides encouragement
+        Database.moveToFront();
+        JOptionPane.showMessageDialog(null, "You completed the thing!");
+    }                                            
+
+    private void clear1ActionPerformed(java.awt.event.ActionEvent evt) {                                       
+        //clear
+        addressfield.setText("");
+        weightfield.setText("");
+        pricefield.setText("");
+    }                                      
+
+    private void savetodb1ActionPerformed(java.awt.event.ActionEvent evt) {                                          
+        //save+add to database    
+        //database login
+        String url ="jdbc:mysql://localhost/asscourier";
+        String user ="root";
+        String password ="";
+        
+        // declare variables
+        String address="";
+        String delmeth="";
+        String fragile="no";
+        double weight=0.0;
+        double price=0.0;
+
+        //recieve text input
+        address= addressfield.getText();
+        weight= Double.parseDouble(weightfield.getText());
+        price= Double.parseDouble(pricefield.getText());
+
+        //recive radio buttons
+        if (jRadioButton1.isSelected())
+        {
+            delmeth = "registered";
+        }
+        if (jRadioButton2.isSelected())
+        {
+            delmeth = "express";
+        }
+        if (jRadioButton3.isSelected())
+        {
+            delmeth = "normal";
+        }
+        if (jRadioButton4.isSelected())
+        {
+            fragile="yes";
+        }
+
+        //create new employee object
+        AssCourier jobObject = new AssCourier(address,delmeth,fragile,weight,price);
+        
+        //sql
+        try{
+            Connection conn = (Connection) DriverManager.getConnection(url, user, password);
+            Statement stat = (Statement) conn.createStatement();
+            String sqlInsert = "insert into asscourier (address,weight,price,delivery_method,total_cost,isfragile)"
+            + "values "
+            + "('" + jobObject.getAddress() + "','" + jobObject.getWeight() + "','" 
+                    + jobObject.getPrice() + "','" + jobObject.getDelmeth() +  "','" + jobObject.calcCost() + "','" + jobObject.getFragile() + "')";
+            stat.execute(sqlInsert);
+
+        conn.close();
+        JOptionPane.showMessageDialog(null, "Job added to database");
+        
+        //errors
+        } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(null, ex.getMessage());
+        } 
+
+    }                                         
+
+    private void clear2ActionPerformed(java.awt.event.ActionEvent evt) {                                       
+        // clear
+        displayarea1.append("");
+    }                                      
+
+    private void displayall1ActionPerformed(java.awt.event.ActionEvent evt) {                                            
+        //display all
+        //sql login
+        String url ="jdbc:mysql://localhost/asscourier";
+        String user ="root";
+        String password ="";
+        String sql = "select * from asscourier";
+        
+        //connect
+        try {
+        Connection conn = (Connection) DriverManager.getConnection(url, user, password);
+        Statement stat = (Statement) conn.createStatement();
+        ResultSet rsjob = stat.executeQuery(sql);
+        
+        //display
+        while(rsjob.next())
+        {
+        String jobID = rsjob.getString("jobID");
+        String address = rsjob.getString("address");
+        String delmeth = rsjob.getString("delivery_method");
+        String fragile = rsjob.getString("isfragile");
+        double weight = rsjob.getDouble("weight");
+        double price = rsjob.getDouble("price");
+        double cost = rsjob.getDouble("total_cost");
+        
+        displayarea1.append("Job ID: " + jobID + "\n" +
+        "Address: " + address + "\n" +
+        "Delivery Method: " + delmeth + "\n" +
+        "Object is fragile?: " + fragile + "\n" +
+        "Object Weight: " + weight + "\n" +
+        "Object Price: $ " + price + "\n" +
+        "Total Cost: $ " + cost + "\n");
+        }
+        
+        conn.close();
+        } 
+        //errors
+        catch (SQLException ex) {
+        JOptionPane.showMessageDialog(null, ex.getMessage());
+        } 
+    }                                           
+
+    private void exporttofileActionPerformed(java.awt.event.ActionEvent evt) {                                             
+        //print to file
+        //get combo box
+        String filename="";
+        filename = (String)methodselector.getSelectedItem();
+        
+        //login
+        String url ="jdbc:mysql://localhost/asscourier";
+        String user ="root";
+        String password ="";
+        String sql = "SELECT * FROM asscourier WHERE delivery_method = '" + filename + "'";
+        
+        //saves to project folder 
+        try {
+        Connection conn = (Connection) DriverManager.getConnection(url, user, password);
+        Statement stat = (Statement) conn.createStatement();
+        ResultSet rsjob = stat.executeQuery(sql);
+        PrintWriter pw = new PrintWriter(new FileWriter(filename + ".txt"));
+        
+        //grab strings
+        while(rsjob.next())
+        {
+        String jobID = rsjob.getString("jobID");
+        String address = rsjob.getString("address");
+        String delmeth = rsjob.getString("delivery_method");
+        String fragile = rsjob.getString("isfragile");
+        double weight = rsjob.getDouble("weight");
+        double price = rsjob.getDouble("price");
+        double cost = rsjob.getDouble("total_cost");
+        
+        // print to file
+        pw.println("Job ID: " + jobID );
+        pw.println("Address: " + address );
+        pw.println("Delivery Method: " + delmeth );
+        pw.println("Object is fragile?: " + fragile );
+        pw.println("Object Weight: " + weight );
+        pw.println("Object Price: $ " + price );
+        pw.println("Total Cost: $ " + cost );
+        pw.println("----------------------");
+        }
+        pw.close();
+        conn.close();
+        JOptionPane.showMessageDialog(null, "Jobs written to file");
+        } catch (SQLException ex) {
+        
+        //error display
+        JOptionPane.showMessageDialog(null, ex.getMessage());
+        } catch (IOException ex) {
+        JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }                                            
+
+    private void saveanupdateActionPerformed(java.awt.event.ActionEvent evt) {                                             
+        //update
+        Statement stat = null;
+        
+        //sql
+        String url ="jdbc:mysql://localhost/asscourier";
+        String user ="root";
+        String password ="";
+        
+        //variables
+        String jobID = "";
+        String address = "";
+        String weight = "";
+        String price = "";
+
+        //get values
+        address = addressfield2.getText();
+        jobID = jobidfield.getText();
+        weight = weightfield2.getText();
+        price = pricefield2.getText();
+        
+        //check for empty
+        if (address.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "please select modify&display or enter an address");
+            return;
+        }
+       if (jobID.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "please select modify&display or enter a jobID");
+                return;
+       }
+        if (weight.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "please select modify&display or enter a weight");
+                return;
+        }
+        if (price.isEmpty()) {
+              JOptionPane.showMessageDialog(this, "please select modify&display or enter a price");
+        return;  
+        }
+        //sql
+        String sql = "UPDATE asscourier SET address = '" + address +
+                "', jobID = '" + jobID + "', weight = '" + 
+                weight + "', price = '" + price + "' WHERE jobID = " + jobID;
+        
+        try {
+            Connection conn = (Connection) DriverManager.getConnection(url, user, password);
+            stat = (Statement) conn.createStatement();
+            int rows = stat.executeUpdate(sql);
+        
+        //error display
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "save error: " + e);
+        }
+    }                                            
+
+    private void modandisplayActionPerformed(java.awt.event.ActionEvent evt) {                                             
+        //modify+display
+        
+        //select job id
+        jobID = JOptionPane.showInputDialog("Please enter the job ID you wish to edit");
+        Statement stat = null;
+        ResultSet rsjob = null;
+        
+        //import data for given job id
+        try {
+        stat = (Statement) conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        rsjob = stat.executeQuery("SELECT jobID, address, weight, price FROM asscourier WHERE jobID = " + jobID);
+        while(rsjob.next()) {
+        addressfield2.setText(rsjob.getString("jobID"));
+        jobidfield.setText(rsjob.getString("address"));
+        weightfield2.setText(rsjob.getString("weight"));
+        pricefield2.setText(rsjob.getString("price"));
+                            }
+        }
+        catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, "display by jobid  error: ");
+        } 
+        //enable editing of text field
+        addressfield2.setEnabled(true);
+        jobidfield.setEnabled(true);
+        weightfield2.setEnabled(true);
+        pricefield2.setEnabled(true);
+    }                                            
+
+    private void deletejobidActionPerformed(java.awt.event.ActionEvent evt) {                                            
+        //delete        
+        //sql
+        Statement stat = null;
+        String url ="jdbc:mysql://localhost/asscourier";
+        String user ="root";
+        String password ="";
+        
+        ResultSet rsjob = null;
+        String jobID = "";
+        
+        //select ID
+        jobID = JOptionPane.showInputDialog("Enter the Job ID to Delete: ");
+        
+        //delete row of jobid
+        try {
+            stat = (Statement) conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            rsjob = stat.executeQuery("SELECT * FROM asscourier WHERE jobID = " + jobID);
+            if (rsjob.next()) {
+                rsjob.deleteRow();
+            }
+        
+        //errors
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Delete error: " + e);
+        }
+    }                                           
+
+    private void selectrecordActionPerformed(java.awt.event.ActionEvent evt) {                                             
+        //show only one
+        //clear
+        displayarea3.append("");
+        //sql
+        String url ="jdbc:mysql://localhost/asscourier";
+        String user ="root";
+        String password ="";
+        
+        com.mysql.jdbc.Statement stat = null;
+        ResultSet rsjob = null;
+        String jobID = "";
+        
+        //select ID
+        jobID = JOptionPane.showInputDialog("Enter the Job ID to display: ");
+        
+        try {
+            Connection conn = (Connection) DriverManager.getConnection(url, user, password);
+            stat = (com.mysql.jdbc.Statement) conn.createStatement();
+            rsjob = stat.executeQuery("SELECT * FROM asscourier WHERE jobID = " + jobID);
+            if (rsjob.next()) {
+    
+            String address = rsjob.getString("address");
+            String delmeth = rsjob.getString("delivery_method");
+            String fragile = rsjob.getString("isfragile");
+            double weight = rsjob.getDouble("weight");
+            double price = rsjob.getDouble("price");
+            double cost = rsjob.getDouble("total_cost");
+            
+            //display record
+            displayarea3.append("Job ID: " + jobID + "\n" +
+            "Address: " + address + "\n" +
+            "Delivery Method: " + delmeth + "\n" +
+            "Object is fragile?: " + fragile + "\n" +
+            "Object Weight: " + weight + "\n" +
+            "Object Price: $ " + price + "\n" +
+            "Total Cost: $ " + cost + "\n");
+                
+            }
+            //errors
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "show only one error: " + e);
+        }
+    }                                            
