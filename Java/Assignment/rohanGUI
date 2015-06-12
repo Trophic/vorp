@@ -1,36 +1,91 @@
 package AssCourier;
 
+//imports
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import javax.swing.JOptionPane;
-//javasql
-import java.sql.*; 
+import java.sql.*;
+import com.mysql.jdbc.Connection;
+import com.mysql.jdbc.Statement;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 
 public class AssCourierGUI extends javax.swing.JFrame {
- 
+    Connection conn = null;
+    String jobID="";
+   //test connection to mysql 
     public AssCourierGUI() {
         initComponents();
+        try {
+        Class.forName("org.gjt.mm.mysql.Driver");
+        }
+        catch (Exception e){
+      JOptionPane.showMessageDialog(null,"Driver error " + e);
+        }
+        
+        try {
+        conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/asscourier","root","");
+        }
+        catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,"Connection error " + e);
+        }
     }
-    //javamysql method
-    public boolean loadDriver(){
-    try {
-    Class.forName(java.sql.Driver);
-    return true;
-    } catch (ClassNotFoundException e){
-    // display error message
-    JOptionPane.showMessageDialog(null, "Database Loaded");
-    return false;
-}
-}
-
+   
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
+        jLabel10 = new javax.swing.JLabel();
+        jButton8 = new javax.swing.JButton();
+        jButton10 = new javax.swing.JButton();
         desktopPane = new javax.swing.JDesktopPane();
         Welcome = new javax.swing.JInternalFrame();
         Welcomepic = new javax.swing.JLabel();
         WelcomeButton = new javax.swing.JButton();
         Dinput = new javax.swing.JInternalFrame();
+        jPanel1 = new javax.swing.JPanel();
+        jRadioButton1 = new javax.swing.JRadioButton();
+        jRadioButton2 = new javax.swing.JRadioButton();
+        jRadioButton3 = new javax.swing.JRadioButton();
+        jRadioButton4 = new javax.swing.JRadioButton();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        addressfield = new javax.swing.JTextField();
+        weightfield = new javax.swing.JTextField();
+        pricefield = new javax.swing.JTextField();
+        clear1 = new javax.swing.JButton();
+        savetodb1 = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
         Doutput = new javax.swing.JInternalFrame();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        displayarea1 = new javax.swing.JTextArea();
+        displayall1 = new javax.swing.JButton();
+        clear2 = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        methodselector = new javax.swing.JComboBox();
+        exporttofile = new javax.swing.JButton();
+        Database = new javax.swing.JInternalFrame();
+        jPanel3 = new javax.swing.JPanel();
+        jobidfield = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        saveanupdate = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        addressfield2 = new javax.swing.JTextField();
+        weightfield2 = new javax.swing.JTextField();
+        pricefield2 = new javax.swing.JTextField();
+        modandisplay = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        displayarea3 = new javax.swing.JTextArea();
+        deletejobid = new javax.swing.JButton();
+        selectrecord = new javax.swing.JButton();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         exitMenuItem = new javax.swing.JMenuItem();
@@ -38,10 +93,17 @@ public class AssCourierGUI extends javax.swing.JFrame {
         Welcometofront = new javax.swing.JMenuItem();
         Dinputmenu = new javax.swing.JMenuItem();
         Doutputmenu = new javax.swing.JMenuItem();
+        Databasemenu = new javax.swing.JMenuItem();
         editMenu = new javax.swing.JMenu();
         copyMenuItem = new javax.swing.JMenuItem();
         pasteMenuItem = new javax.swing.JMenuItem();
         deleteMenuItem = new javax.swing.JMenuItem();
+
+        jLabel10.setText("jLabel10");
+
+        jButton8.setText("jButton8");
+
+        jButton10.setText("jButton10");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -68,7 +130,7 @@ public class AssCourierGUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(Welcomepic)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(WelcomeButton, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE))
+                .addComponent(WelcomeButton, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE))
         );
         WelcomeLayout.setVerticalGroup(
             WelcomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -80,45 +142,388 @@ public class AssCourierGUI extends javax.swing.JFrame {
         );
 
         desktopPane.add(Welcome);
-        Welcome.setBounds(0, 0, 400, 280);
+        Welcome.setBounds(0, 0, 470, 380);
 
         Dinput.setClosable(true);
         Dinput.setTitle("Data Input");
         Dinput.setToolTipText("This is where you can input data");
         Dinput.setVisible(true);
 
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Delivery Method"));
+
+        buttonGroup1.add(jRadioButton1);
+        jRadioButton1.setText("Registered");
+
+        buttonGroup1.add(jRadioButton2);
+        jRadioButton2.setText("Express");
+
+        buttonGroup1.add(jRadioButton3);
+        jRadioButton3.setText("Normal");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jRadioButton1)
+                .addGap(41, 41, 41)
+                .addComponent(jRadioButton2)
+                .addGap(61, 61, 61)
+                .addComponent(jRadioButton3)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jRadioButton1)
+                    .addComponent(jRadioButton2)
+                    .addComponent(jRadioButton3))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jRadioButton4.setText("Fragile?");
+
+        jLabel2.setText("Address");
+
+        jLabel3.setText("Weight of object");
+
+        jLabel4.setText("Price per kilo");
+
+        pricefield.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pricefieldActionPerformed(evt);
+            }
+        });
+
+        clear1.setText("Clear text fields");
+        clear1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clear1ActionPerformed(evt);
+            }
+        });
+
+        savetodb1.setText("Save to database");
+        savetodb1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                savetodb1ActionPerformed(evt);
+            }
+        });
+
+        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel7.setText("Job desciption");
+
         javax.swing.GroupLayout DinputLayout = new javax.swing.GroupLayout(Dinput.getContentPane());
         Dinput.getContentPane().setLayout(DinputLayout);
         DinputLayout.setHorizontalGroup(
             DinputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(DinputLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(DinputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(DinputLayout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(35, 35, 35)
+                        .addComponent(addressfield, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 93, Short.MAX_VALUE))
+                    .addGroup(DinputLayout.createSequentialGroup()
+                        .addGroup(DinputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(DinputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(weightfield, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE)
+                            .addComponent(pricefield))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(DinputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(savetodb1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(clear1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap())
+            .addGroup(DinputLayout.createSequentialGroup()
+                .addGroup(DinputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(DinputLayout.createSequentialGroup()
+                        .addGap(156, 156, 156)
+                        .addComponent(jRadioButton4))
+                    .addGroup(DinputLayout.createSequentialGroup()
+                        .addGap(124, 124, 124)
+                        .addComponent(jLabel7)))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         DinputLayout.setVerticalGroup(
             DinputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DinputLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                .addComponent(jRadioButton4)
+                .addGap(18, 18, 18)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(DinputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(addressfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(DinputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(weightfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(clear1))
+                .addGap(18, 18, 18)
+                .addGroup(DinputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(pricefield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(savetodb1))
+                .addGap(37, 37, 37))
         );
 
         desktopPane.add(Dinput);
-        Dinput.setBounds(0, 0, 400, 280);
+        Dinput.setBounds(0, 0, 470, 370);
 
         Doutput.setClosable(true);
         Doutput.setTitle("Data Display");
         Doutput.setToolTipText("This is where you can preview the data before you output it!");
         Doutput.setVisible(true);
 
+        displayarea1.setColumns(20);
+        displayarea1.setRows(5);
+        jScrollPane1.setViewportView(displayarea1);
+
+        displayall1.setText("Display all data");
+        displayall1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                displayall1ActionPerformed(evt);
+            }
+        });
+
+        clear2.setText("Clear area");
+        clear2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clear2ActionPerformed(evt);
+            }
+        });
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Export Data"));
+
+        jLabel5.setText("Which Delivery method?");
+
+        methodselector.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Normal", "Registered", "Express" }));
+
+        exporttofile.setText("Export");
+        exporttofile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exporttofileActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(methodselector, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addComponent(exporttofile)
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(methodselector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(exporttofile))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout DoutputLayout = new javax.swing.GroupLayout(Doutput.getContentPane());
         Doutput.getContentPane().setLayout(DoutputLayout);
         DoutputLayout.setHorizontalGroup(
             DoutputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(DoutputLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(DoutputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
+                    .addGroup(DoutputLayout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26)
+                        .addGroup(DoutputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(displayall1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(clear2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         DoutputLayout.setVerticalGroup(
             DoutputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(DoutputLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(DoutputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(DoutputLayout.createSequentialGroup()
+                        .addGap(7, 7, 7)
+                        .addComponent(displayall1)
+                        .addGap(18, 18, 18)
+                        .addComponent(clear2)))
+                .addContainerGap(60, Short.MAX_VALUE))
         );
 
         desktopPane.add(Doutput);
-        Doutput.setBounds(2, 3, 400, 270);
+        Doutput.setBounds(2, 3, 470, 370);
+
+        Database.setTitle("Data Deletion");
+        Database.setToolTipText("This is where you can delete data from the database");
+        Database.setVisible(true);
+
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Update Records"));
+
+        jobidfield.setEnabled(false);
+
+        jLabel6.setText("Job ID");
+
+        saveanupdate.setText("Save and update record");
+        saveanupdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveanupdateActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("Address");
+
+        jLabel8.setText("Weight");
+
+        jLabel9.setText("Price");
+
+        addressfield2.setEnabled(false);
+
+        weightfield2.setEnabled(false);
+        weightfield2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                weightfield2ActionPerformed(evt);
+            }
+        });
+
+        pricefield2.setEnabled(false);
+
+        modandisplay.setText("Modify & Display");
+        modandisplay.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                modandisplayActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(saveanupdate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(modandisplay, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel8)
+                                    .addComponent(jLabel9))
+                                .addGap(23, 23, 23)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(weightfield2, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
+                                    .addComponent(pricefield2)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel6))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jobidfield)
+                                    .addComponent(addressfield2))))
+                        .addGap(8, 8, 8)))
+                .addGap(22, 22, 22))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jobidfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(addressfield2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(weightfield2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel9)
+                    .addComponent(pricefield2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
+                .addComponent(modandisplay)
+                .addGap(18, 18, 18)
+                .addComponent(saveanupdate)
+                .addContainerGap())
+        );
+
+        displayarea3.setColumns(20);
+        displayarea3.setRows(5);
+        jScrollPane3.setViewportView(displayarea3);
+
+        deletejobid.setText("Delete by Job ID");
+        deletejobid.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deletejobidActionPerformed(evt);
+            }
+        });
+
+        selectrecord.setText("Select record");
+        selectrecord.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                selectrecordActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout DatabaseLayout = new javax.swing.GroupLayout(Database.getContentPane());
+        Database.getContentPane().setLayout(DatabaseLayout);
+        DatabaseLayout.setHorizontalGroup(
+            DatabaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(DatabaseLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(DatabaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane3)
+                    .addComponent(selectrecord, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(deletejobid, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        DatabaseLayout.setVerticalGroup(
+            DatabaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(DatabaseLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(DatabaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(DatabaseLayout.createSequentialGroup()
+                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(DatabaseLayout.createSequentialGroup()
+                        .addComponent(jScrollPane3)
+                        .addGap(18, 18, 18)
+                        .addComponent(selectrecord)
+                        .addGap(18, 18, 18)
+                        .addComponent(deletejobid)
+                        .addGap(31, 31, 31))))
+        );
+
+        desktopPane.add(Database);
+        Database.setBounds(0, 0, 470, 380);
 
         menuBar.setToolTipText("The menu!");
 
@@ -158,13 +563,22 @@ public class AssCourierGUI extends javax.swing.JFrame {
         Tools.add(Dinputmenu);
 
         Doutputmenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
-        Doutputmenu.setText("Data Display");
+        Doutputmenu.setText("Data Display and export");
         Doutputmenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 DoutputmenuActionPerformed(evt);
             }
         });
         Tools.add(Doutputmenu);
+
+        Databasemenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_W, java.awt.event.InputEvent.CTRL_MASK));
+        Databasemenu.setText("Delete and modify Data");
+        Databasemenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DatabasemenuActionPerformed(evt);
+            }
+        });
+        Tools.add(Databasemenu);
 
         menuBar.add(Tools);
 
@@ -194,11 +608,11 @@ public class AssCourierGUI extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 399, Short.MAX_VALUE)
+            .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 474, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)
+            .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
         );
 
         pack();
@@ -233,6 +647,342 @@ public class AssCourierGUI extends javax.swing.JFrame {
         Dinput.moveToFront();
         JOptionPane.showMessageDialog(null, "You Opened the Data Input screen. Try your hardest!!");
     }                                          
+
+    private void DatabasemenuActionPerformed(java.awt.event.ActionEvent evt) {                                             
+        //moves database deletion to front and provides encouragement
+        Database.moveToFront();
+        JOptionPane.showMessageDialog(null, "You completed the thing!");
+    }                                            
+
+    private void clear1ActionPerformed(java.awt.event.ActionEvent evt) {                                       
+        //clear
+        addressfield.setText("");
+        weightfield.setText("");
+        pricefield.setText("");
+    }                                      
+
+    private void savetodb1ActionPerformed(java.awt.event.ActionEvent evt) {                                          
+        //save+add to database    
+        //database login
+        String url ="jdbc:mysql://localhost/asscourier";
+        String user ="root";
+        String password ="";
+        
+        // declare variables
+        String address="";
+        String delmeth="";
+        String fragile="no";
+        double weight=0.0;
+        double price=0.0;
+
+        //recieve text input
+        address= addressfield.getText();
+        weight= Double.parseDouble(weightfield.getText());
+        price= Double.parseDouble(pricefield.getText());
+
+        //recive radio buttons
+        if (jRadioButton1.isSelected())
+        {
+            delmeth = "registered";
+        }
+        if (jRadioButton2.isSelected())
+        {
+            delmeth = "express";
+        }
+        if (jRadioButton3.isSelected())
+        {
+            delmeth = "normal";
+        }
+        if (jRadioButton4.isSelected())
+        {
+            fragile="yes";
+        }
+
+        //create new employee object
+        AssCourier jobObject = new AssCourier(address,delmeth,fragile,weight,price);
+        
+        //sql
+        try{
+            Connection conn = (Connection) DriverManager.getConnection(url, user, password);
+            Statement stat = (Statement) conn.createStatement();
+            String sqlInsert = "insert into asscourier (address,weight,price,delivery_method,total_cost,isfragile)"
+            + "values "
+            + "('" + jobObject.getAddress() + "','" + jobObject.getWeight() + "','" 
+                    + jobObject.getPrice() + "','" + jobObject.getDelmeth() +  "','" + jobObject.calcCost() + "','" + jobObject.getFragile() + "')";
+            stat.execute(sqlInsert);
+
+        conn.close();
+        JOptionPane.showMessageDialog(null, "Job added to database");
+        
+        //errors
+        } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(null, ex.getMessage());
+        } 
+
+    }                                         
+
+    private void clear2ActionPerformed(java.awt.event.ActionEvent evt) {                                       
+        // clear
+        displayarea1.append("");
+    }                                      
+
+    private void displayall1ActionPerformed(java.awt.event.ActionEvent evt) {                                            
+        //display all
+        //sql login
+        String url ="jdbc:mysql://localhost/asscourier";
+        String user ="root";
+        String password ="";
+        String sql = "select * from asscourier";
+        
+        //connect
+        try {
+        Connection conn = (Connection) DriverManager.getConnection(url, user, password);
+        Statement stat = (Statement) conn.createStatement();
+        ResultSet rsjob = stat.executeQuery(sql);
+        
+        //display
+        while(rsjob.next())
+        {
+        String jobID = rsjob.getString("jobID");
+        String address = rsjob.getString("address");
+        String delmeth = rsjob.getString("delivery_method");
+        String fragile = rsjob.getString("isfragile");
+        double weight = rsjob.getDouble("weight");
+        double price = rsjob.getDouble("price");
+        double cost = rsjob.getDouble("total_cost");
+        
+        displayarea1.append("Job ID: " + jobID + "\n" +
+        "Address: " + address + "\n" +
+        "Delivery Method: " + delmeth + "\n" +
+        "Object is fragile?: " + fragile + "\n" +
+        "Object Weight: " + weight + "\n" +
+        "Object Price: $ " + price + "\n" +
+        "Total Cost: $ " + cost + "\n");
+        }
+        
+        conn.close();
+        } 
+        //errors
+        catch (SQLException ex) {
+        JOptionPane.showMessageDialog(null, ex.getMessage());
+        } 
+    }                                           
+
+    private void exporttofileActionPerformed(java.awt.event.ActionEvent evt) {                                             
+        //print to file
+        //get combo box
+        String filename="";
+        filename = (String)methodselector.getSelectedItem();
+        
+        //login
+        String url ="jdbc:mysql://localhost/asscourier";
+        String user ="root";
+        String password ="";
+        String sql = "SELECT * FROM asscourier WHERE delivery_method = '" + filename + "'";
+        
+        //saves to project folder 
+        try {
+        Connection conn = (Connection) DriverManager.getConnection(url, user, password);
+        Statement stat = (Statement) conn.createStatement();
+        ResultSet rsjob = stat.executeQuery(sql);
+        PrintWriter pw = new PrintWriter(new FileWriter(filename + ".txt"));
+        
+        //grab strings
+        while(rsjob.next())
+        {
+        String jobID = rsjob.getString("jobID");
+        String address = rsjob.getString("address");
+        String delmeth = rsjob.getString("delivery_method");
+        String fragile = rsjob.getString("isfragile");
+        double weight = rsjob.getDouble("weight");
+        double price = rsjob.getDouble("price");
+        double cost = rsjob.getDouble("total_cost");
+        
+        // print to file
+        pw.println("Job ID: " + jobID );
+        pw.println("Address: " + address );
+        pw.println("Delivery Method: " + delmeth );
+        pw.println("Object is fragile?: " + fragile );
+        pw.println("Object Weight: " + weight );
+        pw.println("Object Price: $ " + price );
+        pw.println("Total Cost: $ " + cost );
+        pw.println("----------------------");
+        }
+        pw.close();
+        conn.close();
+        JOptionPane.showMessageDialog(null, "Jobs written to file");
+        } catch (SQLException ex) {
+        
+        //error display
+        JOptionPane.showMessageDialog(null, ex.getMessage());
+        } catch (IOException ex) {
+        JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }                                            
+
+    private void saveanupdateActionPerformed(java.awt.event.ActionEvent evt) {                                             
+        //update
+        Statement stat = null;
+        
+        //sql
+        String url ="jdbc:mysql://localhost/asscourier";
+        String user ="root";
+        String password ="";
+        
+        //variables
+        String jobID = "";
+        String address = "";
+        String weight = "";
+        String price = "";
+
+        //get values
+        address = addressfield2.getText();
+        jobID = jobidfield.getText();
+        weight = weightfield2.getText();
+        price = pricefield2.getText();
+        
+        //check for empty
+        if (address.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "please select modify&display or enter an address");
+            return;
+        }
+       if (jobID.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "please select modify&display or enter a jobID");
+                return;
+       }
+        if (weight.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "please select modify&display or enter a weight");
+                return;
+        }
+        if (price.isEmpty()) {
+              JOptionPane.showMessageDialog(this, "please select modify&display or enter a price");
+        return;  
+        }
+        //sql
+        String sql = "UPDATE asscourier SET address = '" + address +
+                "', jobID = '" + jobID + "', weight = '" + 
+                weight + "', price = '" + price + "' WHERE jobID = " + jobID;
+        
+        try {
+            Connection conn = (Connection) DriverManager.getConnection(url, user, password);
+            stat = (Statement) conn.createStatement();
+            int rows = stat.executeUpdate(sql);
+        
+        //error display
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "save error: " + e);
+        }
+    }                                            
+
+    private void modandisplayActionPerformed(java.awt.event.ActionEvent evt) {                                             
+        //modify+display
+        
+        //select job id
+        jobID = JOptionPane.showInputDialog("Please enter the job ID you wish to edit");
+        Statement stat = null;
+        ResultSet rsjob = null;
+        
+        //import data for given job id
+        try {
+        stat = (Statement) conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        rsjob = stat.executeQuery("SELECT jobID, address, weight, price FROM asscourier WHERE jobID = " + jobID);
+        while(rsjob.next()) {
+        addressfield2.setText(rsjob.getString("jobID"));
+        jobidfield.setText(rsjob.getString("address"));
+        weightfield2.setText(rsjob.getString("weight"));
+        pricefield2.setText(rsjob.getString("price"));
+                            }
+        }
+        catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, "display by jobid  error: ");
+        } 
+        //enable editing of text field
+        addressfield2.setEnabled(true);
+        jobidfield.setEnabled(true);
+        weightfield2.setEnabled(true);
+        pricefield2.setEnabled(true);
+    }                                            
+
+    private void deletejobidActionPerformed(java.awt.event.ActionEvent evt) {                                            
+        //delete        
+        //sql
+        Statement stat = null;
+        String url ="jdbc:mysql://localhost/asscourier";
+        String user ="root";
+        String password ="";
+        
+        ResultSet rsjob = null;
+        String jobID = "";
+        
+        //select ID
+        jobID = JOptionPane.showInputDialog("Enter the Job ID to Delete: ");
+        
+        //delete row of jobid
+        try {
+            stat = (Statement) conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            rsjob = stat.executeQuery("SELECT * FROM asscourier WHERE jobID = " + jobID);
+            if (rsjob.next()) {
+                rsjob.deleteRow();
+            }
+        
+        //errors
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Delete error: " + e);
+        }
+    }                                           
+
+    private void selectrecordActionPerformed(java.awt.event.ActionEvent evt) {                                             
+        //show only one
+        //clear
+        displayarea3.append("");
+        //sql
+        String url ="jdbc:mysql://localhost/asscourier";
+        String user ="root";
+        String password ="";
+        
+        com.mysql.jdbc.Statement stat = null;
+        ResultSet rsjob = null;
+        String jobID = "";
+        
+        //select ID
+        jobID = JOptionPane.showInputDialog("Enter the Job ID to display: ");
+        
+        try {
+            Connection conn = (Connection) DriverManager.getConnection(url, user, password);
+            stat = (com.mysql.jdbc.Statement) conn.createStatement();
+            rsjob = stat.executeQuery("SELECT * FROM asscourier WHERE jobID = " + jobID);
+            if (rsjob.next()) {
+    
+            String address = rsjob.getString("address");
+            String delmeth = rsjob.getString("delivery_method");
+            String fragile = rsjob.getString("isfragile");
+            double weight = rsjob.getDouble("weight");
+            double price = rsjob.getDouble("price");
+            double cost = rsjob.getDouble("total_cost");
+            
+            //display record
+            displayarea3.append("Job ID: " + jobID + "\n" +
+            "Address: " + address + "\n" +
+            "Delivery Method: " + delmeth + "\n" +
+            "Object is fragile?: " + fragile + "\n" +
+            "Object Weight: " + weight + "\n" +
+            "Object Price: $ " + price + "\n" +
+            "Total Cost: $ " + cost + "\n");
+                
+            }
+            //errors
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "show only one error: " + e);
+        }
+    }                                            
+
+    private void pricefieldActionPerformed(java.awt.event.ActionEvent evt) {                                           
+        // TODO add your handling code here:
+    }                                          
+
+    private void weightfield2ActionPerformed(java.awt.event.ActionEvent evt) {                                             
+        // TODO add your handling code here:
+    }                                            
 
     /**
      * @param args the command line arguments
@@ -270,6 +1020,8 @@ public class AssCourierGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify                     
+    private javax.swing.JInternalFrame Database;
+    private javax.swing.JMenuItem Databasemenu;
     private javax.swing.JInternalFrame Dinput;
     private javax.swing.JMenuItem Dinputmenu;
     private javax.swing.JInternalFrame Doutput;
@@ -279,14 +1031,55 @@ public class AssCourierGUI extends javax.swing.JFrame {
     private javax.swing.JButton WelcomeButton;
     private javax.swing.JLabel Welcomepic;
     private javax.swing.JMenuItem Welcometofront;
+    private javax.swing.JTextField addressfield;
+    private javax.swing.JTextField addressfield2;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JButton clear1;
+    private javax.swing.JButton clear2;
     private javax.swing.JMenuItem copyMenuItem;
     private javax.swing.JMenuItem deleteMenuItem;
+    private javax.swing.JButton deletejobid;
     private javax.swing.JDesktopPane desktopPane;
+    private javax.swing.JButton displayall1;
+    private javax.swing.JTextArea displayarea1;
+    private javax.swing.JTextArea displayarea3;
     private javax.swing.JMenu editMenu;
     private javax.swing.JMenuItem exitMenuItem;
+    private javax.swing.JButton exporttofile;
     private javax.swing.JMenu fileMenu;
+    private javax.swing.JButton jButton10;
+    private javax.swing.JButton jButton8;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JRadioButton jRadioButton1;
+    private javax.swing.JRadioButton jRadioButton2;
+    private javax.swing.JRadioButton jRadioButton3;
+    private javax.swing.JRadioButton jRadioButton4;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTextField jobidfield;
     private javax.swing.JMenuBar menuBar;
+    private javax.swing.JComboBox methodselector;
+    private javax.swing.JButton modandisplay;
     private javax.swing.JMenuItem pasteMenuItem;
+    private javax.swing.JTextField pricefield;
+    private javax.swing.JTextField pricefield2;
+    private javax.swing.JButton saveanupdate;
+    private javax.swing.JButton savetodb1;
+    private javax.swing.JButton selectrecord;
+    private javax.swing.JTextField weightfield;
+    private javax.swing.JTextField weightfield2;
     // End of variables declaration                   
 
 }
