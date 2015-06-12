@@ -1,0 +1,74 @@
+package AssCourier;
+
+public class AssCourier {
+     //declare private variables
+    private String address;
+    private String delmeth;
+    private String fragile;
+    private double weight;
+    private double price;
+    private double cost;
+    
+    //constructor
+    public AssCourier() {
+    }
+
+    public AssCourier(String address, String delmeth, String fragile, double weight, double price) {
+
+        this.address = address;
+        this.delmeth = delmeth;
+        this.fragile = fragile;
+        this.weight = weight;
+        this.price = price;
+    }
+    
+    //methods
+    //set
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setDelmeth(String delmeth) {
+        this.delmeth = delmeth;
+    }
+
+    public void setFragile(String fragile) {
+        this.fragile = fragile;
+    }
+
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+    
+    //get
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getDelmeth() {
+        return delmeth;
+    }
+
+    public String getFragile() {
+        return fragile;
+    }
+
+    public double getWeight() {
+        return weight;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public double calcCost() {
+        cost = (weight*price)+((weight*price)*0.02);
+        return cost;
+    }
+}
