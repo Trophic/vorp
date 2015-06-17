@@ -91,10 +91,26 @@ public class AssCourierGUI extends javax.swing.JFrame {
         String fragile="no";
         double weight=0.0;
         double price=0.0;
+        
 
         //recieve text input
         address= addressfield.getText();
+        if (address.isEmpty())
+        {
+            JOptionPane.showMessageDialog(null, "Please enter an address");
+            return;
+        }
+        if ((weightfield.getText()).isEmpty())
+        {
+            JOptionPane.showMessageDialog(null, "Please enter a weight");
+            return;
+        }
         weight= Double.parseDouble(weightfield.getText());
+        if ((pricefield.getText()).isEmpty())
+        {
+            JOptionPane.showMessageDialog(null, "Please enter a price");
+            return;
+        }
         price= Double.parseDouble(pricefield.getText());
 
         //recive radio buttons
@@ -102,19 +118,27 @@ public class AssCourierGUI extends javax.swing.JFrame {
         {
             delmeth = "registered";
         }
-        if (jRadioButton2.isSelected())
+        else if (jRadioButton2.isSelected())
         {
             delmeth = "express";
         }
-        if (jRadioButton3.isSelected())
+        else if (jRadioButton3.isSelected())
         {
             delmeth = "normal";
         }
-        if (jRadioButton4.isSelected())
+        else
+        {
+           JOptionPane.showMessageDialog(null, "Please select a delivery method");
+            return; 
+        }
+        
+        //recieve checkbox
+        if (frabilebutt.isSelected())
         {
             fragile="yes";
         }
 
+        
         //create new employee object
         AssCourier jobObject = new AssCourier(address,delmeth,fragile,weight,price);
         
@@ -136,11 +160,11 @@ public class AssCourierGUI extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, ex.getMessage());
         } 
 
-    }                                         
+    }                                        
 
     private void clear2ActionPerformed(java.awt.event.ActionEvent evt) {                                       
         // clear
-        displayarea1.append("");
+        displayarea1.setText("");
     }                                      
 
     private void displayall1ActionPerformed(java.awt.event.ActionEvent evt) {                                            
@@ -263,10 +287,10 @@ public class AssCourierGUI extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "please select modify&display or enter an address");
             return;
         }
-       if (jobID.isEmpty()) {
+        if (jobID.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "please select modify&display or enter a jobID");
                 return;
-       }
+        }
         if (weight.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "please select modify&display or enter a weight");
                 return;
@@ -289,7 +313,7 @@ public class AssCourierGUI extends javax.swing.JFrame {
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "save error: " + e);
         }
-    }                                            
+    }                                           
 
     private void modandisplayActionPerformed(java.awt.event.ActionEvent evt) {                                             
         //modify+display
@@ -304,8 +328,8 @@ public class AssCourierGUI extends javax.swing.JFrame {
         stat = (Statement) conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
         rsjob = stat.executeQuery("SELECT jobID, address, weight, price FROM asscourier WHERE jobID = " + jobID);
         while(rsjob.next()) {
-        addressfield2.setText(rsjob.getString("jobID"));
-        jobidfield.setText(rsjob.getString("address"));
+        jobidfield.setText(rsjob.getString("jobID"));
+        addressfield2.setText(rsjob.getString("address"));
         weightfield2.setText(rsjob.getString("weight"));
         pricefield2.setText(rsjob.getString("price"));
                             }
