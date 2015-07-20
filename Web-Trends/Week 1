@@ -1,0 +1,29 @@
+http://tinyurl.com/webtrendarticle01
+http://tinyurl.com/webtrendarticle02
+http://tinyurl.com/webtrendarticle03
+
+What technology is available to create web applications?
+Arnoldc
+Chicken
+ook?
+
+What are the pros and cons of each?
+Arnoldc is similar to java and is arnold schwarznegger inclusive
+Chicken is deadfish variant and is poultry inclusive
+ook is a brainfuck variant and gorilla inclusive
+
+What is a MVC?
+accoring to wikipedia a mvc is made up of: 
+-controller sends commands to update the model 
+-model stores data that is retrieved from the controller
+-view requests information from the model that it uses to generate an output representation
+-user views the view
+
+What CSS and Javascript frameworks are currently available?
+there is a bunch.
+I've heard of jquery as the most used js framework
+I enjoyed using bootstrap as a css framework
+
+Why would you use a framework? What are the benefits?
+For css it becomes more drag&drop (which results in quicker turn-a-round)
+For js i would probably stick with the easiest, most well-documented solution as I am not familiar with the language. If I was working with someone who had js experience I would make an effort to learn their framework and if I was reccommending someone blind I would ask someone I knew with js experience
