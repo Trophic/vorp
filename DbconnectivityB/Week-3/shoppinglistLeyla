@@ -24,6 +24,7 @@ if (isset($_POST['btnAdd']) && $_POST['btnAdd'] == "Add Item") {
         $shopping_list[] = $new_item;
     }
 }
+
 ?>
 
 <!DOCTYPE html>
