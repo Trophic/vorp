@@ -1,0 +1,90 @@
+<?php
+//$shopping_list = []; - will keep replacing the last item
+if (isset($_POST['shoppinglist'])) {
+    $shopping_list = $_POST['shoppinglist'];
+} else {
+    $shopping_list = ['Ciabatta Rolls', 'Full Cream Milk'];
+}
+//var_dump is a useful way of seeing what's in the array
+$errors = array();
+
+//code behind the delete button to recognise which ID to delete
+if (isset($_POST['btnDelete']) && $_POST['btnDelete'] == "Delete") {
+    $id = $_POST['idsToDelete'];
+    //the number in the [] will show which element will be deleted first ie. 0 = first
+    unset($shopping_list[$id]);
+    $shopping_list = array_values($shopping_list);
+}
+
+if (isset($_POST['btnAdd']) && $_POST['btnAdd'] == "Add Item") {
+    $new_item = $_POST['newitem'];
+    if (empty($new_item)) {
+        $errors[] = 'The new item cannot be empty.';
+    } else {
+        $shopping_list[] = $new_item;
+    }
+}
+?>
+
+<!DOCTYPE html>
+<head>
+    <title>Shopping List</title>
+</head>
+<body>
+    <div id="page">
+        <div id="header">
+            <h1>Shopping List</h1>
+        </div>
+        <div id="main">
+            <!-- part 1: the errors -->
+            <?php if (count($errors) > 0) : ?>
+                <h2>Errors</h2>
+                <ul>
+                    <?php foreach ($errors as $error) : ?>
+                        <li><?php echo $error; ?></li>
+                    <?php endforeach; ?>
+                </ul>
+            <?php endif; ?>
+
+            <!-- part 2: the Shopping List -->
+            <h2>Items to buy</h2>
+            <?php if (count($shopping_list) == 0) : ?>
+                <p>There are no items in your shopping list.</p>
+            <?php else: ?>
+                <table>
+                    <?php foreach ($shopping_list as $id => $item) : ?>
+                        <tr>
+                            <td><?php echo ($id + 1) . "."; ?> </td> 
+                            <td> <?= $item; ?></td> 
+                            <td>
+                                <!-- part 2a: the delete button form - the id is taken from where the button is pressed idsToDelete -->
+                                <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
+                                     <input type="hidden" name="idsToDelete" value="<?= $id ?>">
+                                    <?php foreach ($shopping_list as $item) : ?>
+                                    <input type="hidden" name="shoppinglist[]" value="<?php echo $item; ?>"/>
+                                    <?php endforeach; ?>
+                                        <input type="submit" name="btnDelete" value="Delete"/>
+                                </form>
+
+                        </tr>
+                    <?php endforeach; ?>
+                </table>
+            <?php endif; ?>
+            <br />
+
+            <!-- part 3: the add form -->
+            <h2>Add Item</h2>
+            <form action="." method="post" >
+                <?php foreach ($shopping_list as $item) : ?>
+                    <input type="hidden" name="shoppinglist[]" value="<?php echo $item; ?>"/>
+                <?php endforeach; ?>
+                <label>Item:</label>
+                <input type="text" name="newitem" id="newitem"/> 
+                <label>&nbsp;</label>
+                <input type="submit" name="btnAdd" value="Add Item"/><br />
+            </form>
+            <br />
+        </div><!-- end main -->
+    </div><!-- end page -->
+</body>
+</html>
