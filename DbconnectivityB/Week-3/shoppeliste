@@ -1,17 +1,17 @@
 <?php
-if (isset($_POST['$shopping_list'])) {
-    $shopping_list = $_POST['$shopping_list'];
+//either shopping list comes from somewhere or generates an empty one
+if (isset($_POST['shoppinglist'])) {
+    $shopping_list = $_POST['shoppinglist'];
 } else {
-//use original list
+//use empty list
     $shopping_list = [];
 }
-//errors array
+//error storage array
 $errors = array();
 //delete button
 if (isset($_POST['btndelete']) && $_POST['btndelete'] == "Delete") {
-
-    $id = $_POST['idxtodelete'];
-    unset($shopping_list[0]);
+    $id = $_POST['idxTodelete'];
+    unset($shopping_list[$id]);
     $shopping_list = array_values($shopping_list);
 }
 //add button
@@ -36,7 +36,7 @@ if (isset($_POST['btnAdd']) && $_POST['btnAdd'] == "Add Item") {
                 <h1>Shopping List</h1>
             </div>
             <div id="main">
-                <!-- part 1: the errors -->
+                <!-- display errors -->
                 <?php if (count($errors) > 0) : ?>
                     <h2>Errors</h2>
                     <ul>
@@ -45,8 +45,7 @@ if (isset($_POST['btnAdd']) && $_POST['btnAdd'] == "Add Item") {
                         <?php endforeach; ?>
                     </ul>
                 <?php endif; ?>
-
-                <!-- part 2: the Shopping List -->
+                <!-- display list -->
                 <h2>Items to buy</h2>
                 <?php if (count($shopping_list) == 0) : ?>
                     <p>There are no items in your shopping list.</p>
@@ -59,20 +58,19 @@ if (isset($_POST['btnAdd']) && $_POST['btnAdd'] == "Add Item") {
                                 <!--delete button -->
                                 <td>
                                     <form action="." method="post">
-                                        <input type="submit" name="btndelete" value="Delete" />
-                                        <?php //<input type="hidden" name="idxtodelete" value="Delete" /> ?>
+                                        <input type="hidden" name="idxTodelete" value= "<?php $id ?>" >
+                                        <input type="submit" name="btnDelete" value="Delete"/>
+                                            <?php foreach ($shopping_list as $item) : ?>
+                                               <input type="hidden" name="shoppinglist[]" value="<?php echo $item; ?>"/>
+                                    <?php endforeach; ?>
                                     </form>
                                 </td>
-                                <?php foreach ($shopping_list as $item) : ?>
-                                <input type="hidden" name="shoppinglist[]" value="<?php echo $item; ?>"/>
-                            <?php endforeach; ?>
                             </tr>
                         <?php endforeach; ?>
                     </table>
                 <?php endif; ?>
                 <br />
-
-                <!-- part 3: the add form -->
+                <!-- add button -->
                 <h2>Add Item</h2>
                 <form action="." method="post" >
                     <?php foreach ($shopping_list as $item) : ?>
@@ -84,7 +82,7 @@ if (isset($_POST['btnAdd']) && $_POST['btnAdd'] == "Add Item") {
                     <input type="submit" name="btnAdd" value="Add Item"/><br />
                 </form>
                 <br />
-            </div><!-- end main -->
-        </div><!-- end page -->
+            </div>
+        </div>
     </body>
 </html>
