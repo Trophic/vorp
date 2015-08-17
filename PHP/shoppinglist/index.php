@@ -1,6 +1,6 @@
 <?php
 define("APP_DIR", __DIR__);
-require(APP_DIR . '/model/shopping_item.php');
+require(APP_DIR . '/model/shopping_list_cookie.php');
 
 if (isset($_POST['action'])) {
 	$action = $_POST['action'];
@@ -9,6 +9,7 @@ if (isset($_POST['action'])) {
 } else {
 	$action = 'display_list';
 }
+$errors = [];
 switch ($action) {
 	case 'add_item':
 		$new_item = $_POST['newitem'];
@@ -35,7 +36,6 @@ switch ($action) {
 }
 
 require_once(APP_DIR . '/model/shopping_list_cookie.php');
-$errors = [];
 $shopping_list = get_shopping_list();
 
 if (isset($_POST['btnAdd']) && $_POST['btnAdd'] == "Add Item") {

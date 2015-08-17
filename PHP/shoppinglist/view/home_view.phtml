@@ -37,6 +37,7 @@
                                 <form action="." method="post" >
                                     <input type="hidden" name="itemid" value="<?= $id; ?>"/>
                                     <input type="submit" name="btnDelete" value="Delete"/>
+									<input type="hidden" name="action" value="delete_item" />
                                 </form>
                             </td>
                         </tr>
@@ -48,6 +49,7 @@
             <!-- part 3: the add form -->
             <h2>Add Item</h2>
             <form action="." method="post" >
+				<input type="hidden" name="action" value="add_item" />
                 <label>Item:</label>
                 <input type="text" name="newitem" id="newitem"/> 
                 <label>&nbsp;</label>
