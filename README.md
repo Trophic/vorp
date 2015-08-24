@@ -1,11 +1,8 @@
 # vorp
 Web Development Coursework
 
-   Java is coming out of netbeans
-   PHP is being done on koding
+The URL links to the github page (which is super outdated, should probably merge in?)
 
-   The URL links to the github page
+R.I.P. never forget about 'Party Fridays'
 
-  P.S. don't forget about 'Party Fridays'
 
-   Will be updating github pages soon (tm)
