@@ -1,0 +1,8 @@
+{
+    "name": "vendor/mailer",
+    "description": "Description of project mailer.",
+    
+    "require": {
+        "raveren/kint": "1.*"
+    }
+}
