@@ -1,0 +1,21 @@
+
+@media only screen and (max-width: 959px) and (min-width: 768px) {
+
+nav {
+    min-width: 100%;
+}
+
+main {
+    min-width: 100%;
+}
+
+label {
+    width: 65px;
+    padding-left:20px;
+}
+
+.date {
+    padding-right:190px;
+    text-align:center;
+}
+}
