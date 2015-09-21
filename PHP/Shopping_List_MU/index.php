@@ -6,7 +6,14 @@ require_once (APP_DIR . '/model/database.php');
 require_once(APP_DIR . '/model/list_db.php');
 require_once(APP_DIR . '/model/tag_db.php');
 
-$current_user = 17;
+session_start();
+if (!isset($_SESSION['user_id'])){
+    header('Location: ./login.');
+    exit();
+}
+else {
+    $current_user=$_SESSION['user_id'];
+}
 
 if (isset($_POST['action'])) {
     $action = $_POST['action'];
