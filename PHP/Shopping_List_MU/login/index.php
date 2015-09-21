@@ -26,7 +26,9 @@ if (isset($_POST['action'])) {
 
 switch ($action) {
     case 'logout':
-        //Implement
+        unset($_SESSION['user_id']);
+        header('Location: ./');
+        exit();
         break;
 
     case 'register_new_user':

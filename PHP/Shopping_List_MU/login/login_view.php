@@ -2,7 +2,7 @@
  
 <div id = main>
      <?php if (!isset($_SESSION['user_id'])): ?>
-            <h2>Login Here</h2>
+            <h2>Login Here </h2>
             <form action=".?action=login_submit" method="post">
                 <fieldset>
                     <p>
@@ -21,7 +21,7 @@
             Not a member. Please register  <a href=".?action=show_register_form">here</a>
         <?php else: ?>
             <h2>Logout Here</h2>
-            <p>You are logged in<br>please <a href=".?action=logout">log out</a>first</p>
+            <p>You are logged in<br>please <a href=".?action=logout">log out </a> first</p>
         <?php endif; ?>
     
     
