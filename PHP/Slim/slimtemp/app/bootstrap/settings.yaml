@@ -1,0 +1,15 @@
+settings :
+  debug : true
+
+view  :
+ template_path : 'app/templates'
+ twig :
+    cache : 'cache/twig'
+    debug : true
+
+db  :
+    host      : 'localhost'
+    username  : 'root'
+    password  : ''
+
+
