@@ -1,8 +1,10 @@
 # vorp
-Web Development Coursework
-
-The URL links to the github page (which is super outdated, should probably merge in?)
-
-R.I.P. never forget about 'Party Fridays'
-
-
+----
+##Web Development Coursework
+   Each Folder corresponds to a subject or code
+   ----
+   We did a lot of java in class compared to PHP
+   ----
+   Planning to clean this up as a class
+   ----
+###R.I.P. never forget about 'Party Fridays'
